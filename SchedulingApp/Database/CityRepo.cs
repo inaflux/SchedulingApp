@@ -1,0 +1,65 @@
+public static class CityRepo
+{
+    public static int AddCity(City city)
+    {
+        var connection = DBConnection.GetConnection();
+        string query = "INSERT INTO city (city, countryID, createDate, createdBy, lastUpdateBy) " +
+                       "VALUES (@city, @countryID, @createDate, @createdBy, @lastUpdateBy)";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@city", city.CityName);
+            cmd.Parameters.AddWithValue("@countryID", city.CountryID);
+            cmd.Parameters.AddWithValue("@createDate", city.CreateDate);
+            cmd.Parameters.AddWithValue("@createdBy", city.CreatedBy);
+            cmd.Parameters.AddWithValue("@lastUpdateBy", city.LastUpdatedBy);
+            cmd.ExecuteNonQuery();
+        }
+        return (int)cmd.LastInsertedId;
+    }
+
+    public static City GetCityById(int cityId)
+    {
+        var connection = DBConnection.GetConnection();
+        string query = "SELECT * FROM city WHERE cityID = @cityID";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@cityID", cityId);
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new City(
+                        reader.GetInt32("cityID"),
+                        reader.GetString("city"),
+                        reader.GetInt32("countryID"),
+                        reader.GetDateTime("createDate"),
+                        reader.GetString("createdBy"),
+                        reader.GetDateTime("lastUpdate"),
+                        reader.GetString("lastUpdateBy")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
+    public static int GetOrAddCity(string cityName, int countryID)
+    {
+        var connection = DBConnection.GetConnection();
+        string query = "SELECT cityID FROM city WHERE city = @cityName AND countryID = @countryID";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@cityName", cityName);
+            cmd.Parameters.AddWithValue("@countryID", countryID);
+            var result = cmd.ExecuteScalar();
+            if (result != null)
+            {
+                return Convert.ToInt32(result); // City exists, return its ID
+            }
+        }
+
+        // City does not exist, insert it
+        var newCity = new City(0, cityName, countryID, DateTime.Now, "admin", DateTime.Now, "admin");
+        return AddCity(newCity);
+    }
+}

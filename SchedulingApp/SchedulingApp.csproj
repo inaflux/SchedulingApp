@@ -99,6 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerRecords\CustomerDetails.cs" />
+    <Compile Include="Database\AddressRepo.cs" />
+    <Compile Include="Database\AppointmentRepo.cs" />
+    <Compile Include="Database\CityRepo.cs" />
+    <Compile Include="Database\CountryRepo.cs" />
     <Compile Include="Database\CustomerRepo.cs" />
     <Compile Include="Database\DBConnection.cs" />
     <Compile Include="Forms\AppointmentsFrom.cs">

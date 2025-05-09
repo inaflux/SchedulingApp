@@ -41,7 +41,6 @@
             this.currentDateTimeLabel = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
-            this.connectBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.customersDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +89,6 @@
             this.addBtn.TabIndex = 8;
             this.addBtn.Text = "Add Customer";
             this.addBtn.UseVisualStyleBackColor = false;
-            
             // 
             // editBtn
             // 
@@ -187,27 +185,12 @@
             this.mySqlCommand1.EnableCaching = false;
             this.mySqlCommand1.Transaction = null;
             // 
-            // connectBtn
-            // 
-            this.connectBtn.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.connectBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.connectBtn.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connectBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.connectBtn.Location = new System.Drawing.Point(568, 761);
-            this.connectBtn.Name = "connectBtn";
-            this.connectBtn.Size = new System.Drawing.Size(193, 129);
-            this.connectBtn.TabIndex = 25;
-            this.connectBtn.Text = "Connect";
-            this.connectBtn.UseVisualStyleBackColor = false;
-           
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.ClientSize = new System.Drawing.Size(1170, 987);
-            this.Controls.Add(this.connectBtn);
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.currentDateTimeLabel);
             this.Controls.Add(this.exitButton);
@@ -245,7 +228,6 @@
         private System.Windows.Forms.Label currentDateTimeLabel;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
-        private System.Windows.Forms.Button connectBtn;
     }
 }
 

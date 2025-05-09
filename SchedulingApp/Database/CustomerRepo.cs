@@ -9,7 +9,7 @@ using SchedulingApp.Models;
 
 namespace SchedulingApp.Database
 {
-    public class CustomerRepo
+    public static class CustomerRepo
     {
         
 
@@ -48,7 +48,7 @@ namespace SchedulingApp.Database
         }
 
         // Add a new customer
-        public void AddCustomer(Customer customer)
+        public static void AddCustomer(Customer customer)
         {
             var connection = DBConnection.GetConnection();
           
@@ -69,7 +69,7 @@ namespace SchedulingApp.Database
         }
 
         // Update an existing customer
-        public void UpdateCustomer(Customer customer)
+        public static void UpdateCustomer(Customer customer)
         {
             var connection = DBConnection.GetConnection();
             
@@ -89,7 +89,7 @@ namespace SchedulingApp.Database
         }
 
         // Delete a customer
-        public void DeleteCustomer(int customerId)
+        public static void DeleteCustomer(int customerId)
         {
             var connection = DBConnection.GetConnection();
             
@@ -103,7 +103,7 @@ namespace SchedulingApp.Database
         }
 
         // Retrieve a customer by ID
-        public Customer GetCustomerById(int customerId)
+        public static  Customer GetCustomerById(int customerId)
         {
             var connection = DBConnection.GetConnection();
             

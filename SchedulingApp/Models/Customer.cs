@@ -32,6 +32,9 @@ namespace SchedulingApp.Models
 
         public string LastUpdatedBy { get; set; }
 
+
+        // Constructor for creating a new customer
+
         public Customer(int customerID, string customerName, int addressID, bool active, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
             CustomerID = customerID;
@@ -43,7 +46,6 @@ namespace SchedulingApp.Models
             LastUpdate = lastUpdate;
             LastUpdatedBy = lastUpdatedBy;
         }
-       
 
 
     }
