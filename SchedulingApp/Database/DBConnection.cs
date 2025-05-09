@@ -10,35 +10,50 @@ using Org.BouncyCastle.Tls;
 
 namespace SchedulingApp.Database
 {
-    public class DBConnection
+    public static class DBConnection
     {
-        public static MySqlConnection conn { get; set; }
+        private static MySqlConnection _connection;
+
+        public static string ConnectionString => ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
 
         public static void StartConnection()
         {
-           string connStr = ConfigurationManager.ConnectionStrings["localdb"].ConnectionString;
-
             try
             {
-                //intialize connection
-                conn = new MySqlConnection(connStr);
-                //open connection
-                conn.Open();
-
-                MessageBox.Show("Connection is open");
+                if (_connection == null)
+                {
+                    _connection = new MySqlConnection(ConnectionString);
+                    _connection.Open();
+                }
+                else if (_connection.State == System.Data.ConnectionState.Closed)
+                {
+                    _connection.Open();
+                }
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                // Log or rethrow the exception for the calling code to handle
+                throw new Exception("Failed to open database connection.", ex);
             }
-
-
         }
 
         public static void CloseConnection()
         {
-            conn.Close();
+            if (_connection != null && _connection.State == System.Data.ConnectionState.Open)
+            {
+                _connection.Close();
+                _connection = null;
+            }
+        }
 
+        public static MySqlConnection GetConnection()
+        {
+            if (_connection == null || _connection.State == System.Data.ConnectionState.Closed)
+            {
+                StartConnection();
+            }
+
+            return _connection;
         }
     }
 }

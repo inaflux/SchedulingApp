@@ -90,7 +90,7 @@
             this.addBtn.TabIndex = 8;
             this.addBtn.Text = "Add Customer";
             this.addBtn.UseVisualStyleBackColor = false;
-            this.addBtn.Click += new System.EventHandler(this.button1_Click);
+            
             // 
             // editBtn
             // 
@@ -199,7 +199,7 @@
             this.connectBtn.TabIndex = 25;
             this.connectBtn.Text = "Connect";
             this.connectBtn.UseVisualStyleBackColor = false;
-            this.connectBtn.Click += new System.EventHandler(this.connectBtn_Click);
+           
             // 
             // MainForm
             // 

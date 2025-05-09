@@ -15,29 +15,13 @@ namespace SchedulingApp
     public partial class MainForm : Form
     {
 
-        private string connStr;
-        private MySqlConnection conn;
         public MainForm()
         {
             InitializeComponent();
         }
 
-        
-
-       
 
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-
-        }
-
-        private void connectBtn_Click(object sender, EventArgs e)
-
-        {
-            
-
-        }
+   
     }
 }

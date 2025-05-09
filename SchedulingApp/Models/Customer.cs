@@ -43,6 +43,7 @@ namespace SchedulingApp.Models
             LastUpdate = lastUpdate;
             LastUpdatedBy = lastUpdatedBy;
         }
+       
 
 
     }
