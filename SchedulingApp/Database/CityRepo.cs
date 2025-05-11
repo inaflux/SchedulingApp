@@ -1,3 +1,8 @@
+using MySql.Data.MySqlClient;
+using SchedulingApp.Database;
+using SchedulingApp.Models;
+using System;
+
 public static class CityRepo
 {
     public static int AddCity(City city)
@@ -5,6 +10,7 @@ public static class CityRepo
         var connection = DBConnection.GetConnection();
         string query = "INSERT INTO city (city, countryID, createDate, createdBy, lastUpdateBy) " +
                        "VALUES (@city, @countryID, @createDate, @createdBy, @lastUpdateBy)";
+        int lastInsertedId;
         using (var cmd = new MySqlCommand(query, connection))
         {
             cmd.Parameters.AddWithValue("@city", city.CityName);
@@ -13,8 +19,13 @@ public static class CityRepo
             cmd.Parameters.AddWithValue("@createdBy", city.CreatedBy);
             cmd.Parameters.AddWithValue("@lastUpdateBy", city.LastUpdatedBy);
             cmd.ExecuteNonQuery();
+
+            lastInsertedId = (int)cmd.LastInsertedId;
         }
-        return (int)cmd.LastInsertedId;
+        Console.WriteLine("Executing query: " + query);
+
+        // Return the LastInsertedId after the using block
+        return lastInsertedId;
     }
 
     public static City GetCityById(int cityId)
@@ -40,6 +51,8 @@ public static class CityRepo
                 }
             }
         }
+        Console.WriteLine("Executing query: " + query);
+
         return null;
     }
 
@@ -60,6 +73,10 @@ public static class CityRepo
 
         // City does not exist, insert it
         var newCity = new City(0, cityName, countryID, DateTime.Now, "admin", DateTime.Now, "admin");
+        Console.WriteLine("Executing query: " + query);
+
         return AddCity(newCity);
     }
+
+  
 }

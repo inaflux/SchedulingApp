@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.usernameTextBox = new System.Windows.Forms.TextBox();
+            this.pwTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.loginBtn = new System.Windows.Forms.Button();
             this.exitBtn = new System.Windows.Forms.Button();
@@ -47,21 +47,21 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Username:";
             // 
-            // textBox1
+            // usernameTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(277, 130);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(255, 35);
-            this.textBox1.TabIndex = 1;
+            this.usernameTextBox.Location = new System.Drawing.Point(277, 130);
+            this.usernameTextBox.Multiline = true;
+            this.usernameTextBox.Name = "usernameTextBox";
+            this.usernameTextBox.Size = new System.Drawing.Size(255, 35);
+            this.usernameTextBox.TabIndex = 1;
             // 
-            // textBox2
+            // pwTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(277, 210);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(255, 35);
-            this.textBox2.TabIndex = 4;
+            this.pwTextBox.Location = new System.Drawing.Point(277, 210);
+            this.pwTextBox.Multiline = true;
+            this.pwTextBox.Name = "pwTextBox";
+            this.pwTextBox.Size = new System.Drawing.Size(255, 35);
+            this.pwTextBox.TabIndex = 4;
             // 
             // label2
             // 
@@ -86,6 +86,7 @@
             this.loginBtn.Text = "Login";
             this.loginBtn.UseMnemonic = false;
             this.loginBtn.UseVisualStyleBackColor = false;
+            this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
             // 
             // exitBtn
             // 
@@ -100,6 +101,7 @@
             this.exitBtn.Text = "Exit";
             this.exitBtn.UseMnemonic = false;
             this.exitBtn.UseVisualStyleBackColor = false;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
             // 
             // label7
             // 
@@ -124,14 +126,13 @@
             this.ClientSize = new System.Drawing.Size(763, 418);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.exitBtn);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.pwTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.loginBtn);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.usernameTextBox);
             this.Controls.Add(this.label1);
             this.Name = "LoginForm";
             this.Text = "LoginForm";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,8 +141,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox usernameTextBox;
+        private System.Windows.Forms.TextBox pwTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.Button exitBtn;

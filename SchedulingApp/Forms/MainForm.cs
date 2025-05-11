@@ -47,5 +47,63 @@ namespace SchedulingApp
 
             customersDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
+            addCustomerForm addCustomerForm = new addCustomerForm();
+            addCustomerForm.ShowDialog();
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            if(customersDGV.SelectedRows.Count > 0)
+            {
+                int customerId = (int)customersDGV.SelectedRows[0].Cells["CustomerID"].Value;
+                string customerName = customersDGV.SelectedRows[0].Cells["CustomerName"].Value.ToString();
+                DialogResult result = MessageBox.Show($"Are you sure you want to delete {customerName}?", "Delete Customer", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    CustomerRepo.DeleteCustomer(customerId);
+                    LoadCustomerData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a customer to delete.");
+            }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+          
+            // Ensure a row is selected
+            if (customersDGV.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a customer to update.");
+                return;
+            }
+
+            // Get the selected customer data
+            var selectedRow = customersDGV.SelectedRows[0];
+            int customerId = Convert.ToInt32(selectedRow.Cells["CustomerID"].Value);
+            string customerName = selectedRow.Cells["CustomerName"].Value.ToString();
+            string address = selectedRow.Cells["Address"].Value.ToString();
+            string phone = selectedRow.Cells["Phone"].Value.ToString();
+            string city = selectedRow.Cells["City"].Value.ToString();
+            string country = selectedRow.Cells["Country"].Value.ToString();
+
+            // Open the updateCustomerForm and pass the selected customer data
+            var updateForm = new updateCustomerForm(customerId, customerName, address, phone, city, country);
+            updateForm.ShowDialog();
+
+            // Refresh the DataGridView after updating
+            LoadCustomerData();
+        }
     }
+    
 }

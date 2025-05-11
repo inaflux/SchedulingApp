@@ -105,6 +105,7 @@
     <Compile Include="Database\CountryRepo.cs" />
     <Compile Include="Database\CustomerRepo.cs" />
     <Compile Include="Database\DBConnection.cs" />
+    <Compile Include="Database\UserRepo.cs" />
     <Compile Include="Forms\AppointmentsFrom.cs">
       <SubType>Form</SubType>
     </Compile>

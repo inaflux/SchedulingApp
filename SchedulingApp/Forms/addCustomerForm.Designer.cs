@@ -75,7 +75,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(67, 281);
+            this.label2.Location = new System.Drawing.Point(67, 272);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(132, 34);
             this.label2.TabIndex = 4;
@@ -83,7 +83,7 @@
             // 
             // addressTextBox
             // 
-            this.addressTextBox.Location = new System.Drawing.Point(205, 281);
+            this.addressTextBox.Location = new System.Drawing.Point(205, 272);
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(624, 42);
@@ -96,7 +96,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(67, 497);
+            this.label3.Location = new System.Drawing.Point(67, 506);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(221, 34);
             this.label3.TabIndex = 6;
@@ -104,10 +104,10 @@
             // 
             // phoneNumTextBox
             // 
-            this.phoneNumTextBox.Location = new System.Drawing.Point(285, 497);
+            this.phoneNumTextBox.Location = new System.Drawing.Point(304, 506);
             this.phoneNumTextBox.Multiline = true;
             this.phoneNumTextBox.Name = "phoneNumTextBox";
-            this.phoneNumTextBox.Size = new System.Drawing.Size(544, 42);
+            this.phoneNumTextBox.Size = new System.Drawing.Size(532, 42);
             this.phoneNumTextBox.TabIndex = 5;
             // 
             // label4

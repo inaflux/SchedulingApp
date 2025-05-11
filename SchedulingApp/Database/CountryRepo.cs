@@ -1,3 +1,8 @@
+using MySql.Data.MySqlClient;
+using SchedulingApp.Database;
+using SchedulingApp.Models;
+using System;
+
 public static class CountryRepo
 {
     public static int AddCountry(Country country)
@@ -5,6 +10,7 @@ public static class CountryRepo
         var connection = DBConnection.GetConnection();
         string query = "INSERT INTO country (country, createDate, createdBy, lastUpdateBy) " +
                        "VALUES (@country, @createDate, @createdBy, @lastUpdateBy)";
+        int lastInsertedId;
         using (var cmd = new MySqlCommand(query, connection))
         {
             cmd.Parameters.AddWithValue("@country", country.CountryName);
@@ -12,8 +18,12 @@ public static class CountryRepo
             cmd.Parameters.AddWithValue("@createdBy", country.CreatedBy);
             cmd.Parameters.AddWithValue("@lastUpdateBy", country.LastUpdatedBy);
             cmd.ExecuteNonQuery();
+            lastInsertedId = (int)cmd.LastInsertedId;
         }
-        return (int)cmd.LastInsertedId;
+        Console.WriteLine("Executing query: " + query);
+
+        // Return the LastInsertedId after the using block
+        return lastInsertedId;
     }
 
     public static Country GetCountryById(int countryId)
@@ -38,6 +48,8 @@ public static class CountryRepo
                 }
             }
         }
+        Console.WriteLine("Executing query: " + query);
+
         return null;
     }
 
@@ -57,6 +69,8 @@ public static class CountryRepo
 
         // Country does not exist, insert it
         var newCountry = new Country(0, countryName, DateTime.Now, "admin", DateTime.Now, "admin");
+        Console.WriteLine("Executing query: " + query);
+
         return AddCountry(newCountry);
     }
 }

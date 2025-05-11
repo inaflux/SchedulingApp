@@ -18,7 +18,7 @@ namespace SchedulingApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             DBConnection.StartConnection();
-            Application.Run(new MainForm());
+            Application.Run(new LoginForm());
             DBConnection.CloseConnection();
         }
     }

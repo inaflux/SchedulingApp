@@ -26,11 +26,11 @@ namespace SchedulingApp.CustomerRecords
         {
             var connection = DBConnection.GetConnection();
             var customerRecords = new List<CustomerDetails>();
-            string query = @"SELECT customer.customerID, customer.customerName, address.address, address.phone, city.city, country.country" +
-                "FROM customer" +
-                "JOIN address ON customer.addressID = address.addressID" +
-                "JOIN city ON address.cityID = city.cityID" +
-                "JOIN country ON city.countryID = country.countryID";
+            string query = @"SELECT c.customerID, c.customerName, a.address, a.phone, ci.city, co.country " +
+                           "FROM customer c " +
+                           "JOIN address a ON c.addressID = a.addressID " +
+                           "JOIN city ci ON a.cityID = ci.cityID " +
+                           "JOIN country co ON ci.countryID = co.countryID ";
 
             using (var cmd = new MySqlCommand(query, connection))
             {

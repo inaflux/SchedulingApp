@@ -1,3 +1,9 @@
+using MySql.Data.MySqlClient;
+using SchedulingApp.Database;
+using SchedulingApp.Models;
+using System;
+using System.Collections.Generic;
+
 public static class AppointmentRepo
 {
     public static void AddAppointment(Appointment appointment)
@@ -14,7 +20,7 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@location", appointment.Location);
             cmd.Parameters.AddWithValue("@contact", appointment.Contact);
             cmd.Parameters.AddWithValue("@type", appointment.Type);
-            cmd.Parameters.AddWithValue("@url", appointment.Url);
+            cmd.Parameters.AddWithValue("@url", appointment.URL);
             cmd.Parameters.AddWithValue("@start", appointment.Start);
             cmd.Parameters.AddWithValue("@end", appointment.End);
             cmd.Parameters.AddWithValue("@createDate", appointment.CreateDate);
@@ -22,6 +28,8 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@lastUpdateBy", appointment.LastUpdatedBy);
             cmd.ExecuteNonQuery();
         }
+        Console.WriteLine("Executing query: " + query);
+
     }
 
     public static List<Appointment> GetAppointmentsByCustomerId(int customerId)
@@ -56,6 +64,8 @@ public static class AppointmentRepo
                 }
             }
         }
+        Console.WriteLine("Executing query: " + query);
+
         return appointments;
     }
 
@@ -68,5 +78,7 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             cmd.ExecuteNonQuery();
         }
+        Console.WriteLine("Executing query: " + query);
+
     }
 }

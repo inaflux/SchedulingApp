@@ -72,20 +72,20 @@ namespace SchedulingApp.Database
         public static void UpdateCustomer(Customer customer)
         {
             var connection = DBConnection.GetConnection();
-            
-                string query = "UPDATE customer SET customerName = @customerName, addressId = @addressId, active = @active, " +
-                               "lastUpdateBy = @lastUpdateBy WHERE customerId = @customerId";
-                using (var cmd = new MySqlCommand(query, connection))
-                {
-                    cmd.Parameters.AddWithValue("@customerId", customer.CustomerID);
-                    cmd.Parameters.AddWithValue("@customerName", customer.CustomerName);
-                    cmd.Parameters.AddWithValue("@addressId", customer.AddressID);
-                    cmd.Parameters.AddWithValue("@active", customer.Active);
-                    cmd.Parameters.AddWithValue("@lastUpdateBy", customer.LastUpdatedBy);
+            string query = "UPDATE customer SET customerName = @customerName, addressID = @addressID, active = @active, " +
+                           "lastUpdate = @lastUpdate, lastUpdateBy = @lastUpdateBy WHERE customerID = @customerID";
 
-                    cmd.ExecuteNonQuery();
-                }
-            
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@customerID", customer.CustomerID);
+                cmd.Parameters.AddWithValue("@customerName", customer.CustomerName);
+                cmd.Parameters.AddWithValue("@addressID", customer.AddressID);
+                cmd.Parameters.AddWithValue("@active", customer.Active);
+                cmd.Parameters.AddWithValue("@lastUpdate", customer.LastUpdate);
+                cmd.Parameters.AddWithValue("@lastUpdateBy", customer.LastUpdatedBy);
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         // Delete a customer

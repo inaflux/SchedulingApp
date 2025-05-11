@@ -47,7 +47,7 @@
             // 
             // nameTextBox
             // 
-            this.nameTextBox.Location = new System.Drawing.Point(175, 190);
+            this.nameTextBox.Location = new System.Drawing.Point(198, 190);
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(654, 42);
@@ -81,7 +81,7 @@
             // 
             // addressTextBox
             // 
-            this.addressTextBox.Location = new System.Drawing.Point(205, 281);
+            this.addressTextBox.Location = new System.Drawing.Point(229, 281);
             this.addressTextBox.Multiline = true;
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(624, 42);
@@ -102,7 +102,7 @@
             // 
             // phoneNumTextBox
             // 
-            this.phoneNumTextBox.Location = new System.Drawing.Point(285, 367);
+            this.phoneNumTextBox.Location = new System.Drawing.Point(309, 367);
             this.phoneNumTextBox.Multiline = true;
             this.phoneNumTextBox.Name = "phoneNumTextBox";
             this.phoneNumTextBox.Size = new System.Drawing.Size(544, 42);
@@ -152,23 +152,30 @@
             // 
             // saveBtn
             // 
+            this.saveBtn.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.saveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.saveBtn.Location = new System.Drawing.Point(646, 616);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(86, 41);
             this.saveBtn.TabIndex = 11;
             this.saveBtn.Text = "Save";
-            this.saveBtn.UseVisualStyleBackColor = true;
+            this.saveBtn.UseVisualStyleBackColor = false;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
             // cancelBtn
             // 
+            this.cancelBtn.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.cancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cancelBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.cancelBtn.Location = new System.Drawing.Point(743, 616);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(86, 41);
             this.cancelBtn.TabIndex = 12;
             this.cancelBtn.Text = "Cancel";
-            this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.UseVisualStyleBackColor = false;
             // 
             // label6
             // 
@@ -177,7 +184,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Roboto", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(241, 34);
+            this.label6.Location = new System.Drawing.Point(277, 27);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(431, 48);
             this.label6.TabIndex = 13;
@@ -198,7 +205,7 @@
             // 
             // custIDTextBox
             // 
-            this.custIDTextBox.Location = new System.Drawing.Point(261, 105);
+            this.custIDTextBox.Location = new System.Drawing.Point(285, 105);
             this.custIDTextBox.Multiline = true;
             this.custIDTextBox.Name = "custIDTextBox";
             this.custIDTextBox.Size = new System.Drawing.Size(568, 42);
@@ -209,7 +216,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.ClientSize = new System.Drawing.Size(919, 700);
+            this.ClientSize = new System.Drawing.Size(1008, 765);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.custIDTextBox);
             this.Controls.Add(this.label6);
