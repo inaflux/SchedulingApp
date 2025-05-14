@@ -19,7 +19,11 @@ namespace SchedulingApp
             InitializeComponent();
             SetLanguageBasedOnCulture();
         }
-
+        public static class GlobalState
+        {
+            public static int CurrentUserID { get; set; }
+            public static string CurrentUsername { get; set; }
+        }
         private void SetLanguageBasedOnCulture()
         {
             string cultureCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
@@ -93,18 +97,21 @@ namespace SchedulingApp
 
             if (username == "test" && password == "test")
             {
-                MessageBox.Show(GetLocalizedMessage("LoginSuccess"), GetLocalizedMessage("SuccessTitle"));
-                this.DialogResult = DialogResult.OK;
+                GlobalState.CurrentUserID = 1; // Example: Set the logged-in user's ID
+                GlobalState.CurrentUsername = username;
+
+                MessageBox.Show("Login successful!");
                 MainForm mainForm = new MainForm();
                 mainForm.Show();
             }
             else
             {
-                MessageBox.Show(GetLocalizedMessage("InvalidCredentials"), GetLocalizedMessage("ErrorTitle"));
+                MessageBox.Show("Invalid username or password.");
             }
         }
 
         
 
     }
+    
 }

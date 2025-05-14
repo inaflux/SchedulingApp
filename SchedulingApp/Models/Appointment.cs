@@ -56,6 +56,7 @@ namespace SchedulingApp.Models
 
         public string LastUpdatedBy { get; set; }
 
+        public Appointment() { }
         public Appointment(int appointmentID, int customerID, int userID, string title, string description, string location, string contact, 
             string type, string url, DateTime start, DateTime end, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {

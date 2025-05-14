@@ -11,15 +11,21 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using SchedulingApp.CustomerRecords;
 using SchedulingApp.Database;
+using SchedulingApp.Models;
+
 
 namespace SchedulingApp
 {
     public partial class MainForm : Form
     {
+        
+
         public MainForm()
         {
             InitializeComponent();
             LoadCustomerData();
+            
+
         }
 
         private void LoadCustomerData()
@@ -103,6 +109,26 @@ namespace SchedulingApp
 
             // Refresh the DataGridView after updating
             LoadCustomerData();
+        }
+
+
+        
+
+private void scheduleBtn_Click(object sender, EventArgs e)
+        {
+            // Ensure a row is selected
+            if (customersDGV.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a customer to schedule an appointment.");
+                return;
+            }
+
+            // Get the selected customer's ID
+            int customerId = Convert.ToInt32(customersDGV.SelectedRows[0].Cells["CustomerID"].Value);
+
+            // Open the AppointmentsFrom form and pass the customer ID
+            AppointmentsFrom scheduleForm = new AppointmentsFrom(customerId);
+            scheduleForm.ShowDialog();
         }
     }
     

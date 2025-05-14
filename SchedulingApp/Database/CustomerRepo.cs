@@ -133,7 +133,30 @@ namespace SchedulingApp.Database
             return null;
 
         }
-        
+        public static List<Customer> GetCustomerName()
+        {
+            var customers = new List<Customer>();
+            var connection = DBConnection.GetConnection();
+
+            string query = "SELECT customerID, customerName FROM customer";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        customers.Add(new Customer
+                        {
+                            CustomerID = reader.GetInt32("customerID"),
+                            CustomerName = reader.GetString("customerName")
+                        });
+                    }
+                }
+            }
+
+            return customers;
+        }
+
 
 
     }

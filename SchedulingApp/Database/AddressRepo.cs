@@ -41,6 +41,7 @@ public static class AddressRepo
         using (var cmd = new MySqlCommand(query, connection))
         {
             cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@address2", DBNull.Value); // Assuming address2 is not used in this case
             cmd.Parameters.AddWithValue("@cityID", cityId);
             cmd.Parameters.AddWithValue("@phone", phone);
 

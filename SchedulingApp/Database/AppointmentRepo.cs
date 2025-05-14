@@ -81,4 +81,30 @@ public static class AppointmentRepo
         Console.WriteLine("Executing query: " + query);
 
     }
+
+    //update appointment
+    public static void UpdateAppointment(Appointment appointment)
+    {
+        var connection = DBConnection.GetConnection();
+        string query = "UPDATE appointment SET customerID = @customerID, userID = @userID, title = @title, description = @description, " +
+                       "location = @location, contact = @contact, type = @type, url = @url, start = @start, end = @end, " +
+                       "lastUpdateBy = @lastUpdateBy WHERE appointmentID = @appointmentID";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@customerID", appointment.CustomerID);
+            cmd.Parameters.AddWithValue("@userID", appointment.UserID);
+            cmd.Parameters.AddWithValue("@title", appointment.Title);
+            cmd.Parameters.AddWithValue("@description", appointment.Description);
+            cmd.Parameters.AddWithValue("@location", appointment.Location);
+            cmd.Parameters.AddWithValue("@contact", appointment.Contact);
+            cmd.Parameters.AddWithValue("@type", appointment.Type);
+            cmd.Parameters.AddWithValue("@url", appointment.URL);
+            cmd.Parameters.AddWithValue("@start", appointment.Start);
+            cmd.Parameters.AddWithValue("@end", appointment.End);
+            cmd.Parameters.AddWithValue("@lastUpdateBy", appointment.LastUpdatedBy);
+            cmd.Parameters.AddWithValue("@appointmentID", appointment.AppointmentID);
+            cmd.ExecuteNonQuery();
+        }
+        Console.WriteLine("Executing query: " + query);
+    }
 }

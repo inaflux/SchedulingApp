@@ -29,14 +29,11 @@
         private void InitializeComponent()
         {
             this.label6 = new System.Windows.Forms.Label();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.endTimeTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.startTimeTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.apptTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,6 +41,10 @@
             this.appointmentsDGV = new System.Windows.Forms.DataGridView();
             this.editBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
+            this.startTimePick = new System.Windows.Forms.DateTimePicker();
+            this.endTimePick = new System.Windows.Forms.DateTimePicker();
+            this.custComboBox = new System.Windows.Forms.ComboBox();
+            this.deleteBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentsDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,14 +63,6 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "List of Appointments";
             // 
-            // nameTextBox
-            // 
-            this.nameTextBox.Location = new System.Drawing.Point(314, 110);
-            this.nameTextBox.Multiline = true;
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(331, 39);
-            this.nameTextBox.TabIndex = 19;
-            // 
             // cancelBtn
             // 
             this.cancelBtn.BackColor = System.Drawing.Color.DarkSlateGray;
@@ -82,6 +75,7 @@
             this.cancelBtn.TabIndex = 20;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // saveBtn
             // 
@@ -95,6 +89,7 @@
             this.saveBtn.TabIndex = 21;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = false;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
             // label1
             // 
@@ -102,9 +97,9 @@
             this.label1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(69, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(239, 34);
+            this.label1.Size = new System.Drawing.Size(152, 34);
             this.label1.TabIndex = 22;
-            this.label1.Text = "Customer Name:";
+            this.label1.Text = "Customer:";
             // 
             // label2
             // 
@@ -116,14 +111,6 @@
             this.label2.TabIndex = 24;
             this.label2.Text = "End Time:";
             // 
-            // endTimeTextBox
-            // 
-            this.endTimeTextBox.Location = new System.Drawing.Point(223, 369);
-            this.endTimeTextBox.Multiline = true;
-            this.endTimeTextBox.Name = "endTimeTextBox";
-            this.endTimeTextBox.Size = new System.Drawing.Size(331, 39);
-            this.endTimeTextBox.TabIndex = 23;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -133,14 +120,6 @@
             this.label3.Size = new System.Drawing.Size(163, 34);
             this.label3.TabIndex = 26;
             this.label3.Text = "Start Time:";
-            // 
-            // startTimeTextBox
-            // 
-            this.startTimeTextBox.Location = new System.Drawing.Point(248, 279);
-            this.startTimeTextBox.Multiline = true;
-            this.startTimeTextBox.Name = "startTimeTextBox";
-            this.startTimeTextBox.Size = new System.Drawing.Size(331, 39);
-            this.startTimeTextBox.TabIndex = 25;
             // 
             // label4
             // 
@@ -154,10 +133,10 @@
             // 
             // apptTextBox
             // 
-            this.apptTextBox.Location = new System.Drawing.Point(341, 189);
+            this.apptTextBox.Location = new System.Drawing.Point(350, 189);
             this.apptTextBox.Multiline = true;
             this.apptTextBox.Name = "apptTextBox";
-            this.apptTextBox.Size = new System.Drawing.Size(331, 39);
+            this.apptTextBox.Size = new System.Drawing.Size(261, 39);
             this.apptTextBox.TabIndex = 27;
             // 
             // label5
@@ -166,9 +145,9 @@
             this.label5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(69, 450);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(119, 34);
+            this.label5.Size = new System.Drawing.Size(83, 34);
             this.label5.TabIndex = 30;
-            this.label5.Text = "User ID:";
+            this.label5.Text = "User:";
             // 
             // userIDTextBox
             // 
@@ -181,11 +160,11 @@
             // appointmentsDGV
             // 
             this.appointmentsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.appointmentsDGV.Location = new System.Drawing.Point(749, 110);
+            this.appointmentsDGV.Location = new System.Drawing.Point(649, 110);
             this.appointmentsDGV.Name = "appointmentsDGV";
             this.appointmentsDGV.RowHeadersWidth = 62;
             this.appointmentsDGV.RowTemplate.Height = 28;
-            this.appointmentsDGV.Size = new System.Drawing.Size(689, 374);
+            this.appointmentsDGV.Size = new System.Drawing.Size(843, 374);
             this.appointmentsDGV.TabIndex = 31;
             // 
             // editBtn
@@ -194,12 +173,13 @@
             this.editBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.editBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.editBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.editBtn.Location = new System.Drawing.Point(1351, 507);
+            this.editBtn.Location = new System.Drawing.Point(1405, 507);
             this.editBtn.Name = "editBtn";
             this.editBtn.Size = new System.Drawing.Size(87, 47);
             this.editBtn.TabIndex = 32;
             this.editBtn.Text = "Edit ";
             this.editBtn.UseVisualStyleBackColor = false;
+            this.editBtn.Click += new System.EventHandler(this.editBtn_Click);
             // 
             // label7
             // 
@@ -216,12 +196,56 @@
             this.label7.TabIndex = 33;
             this.label7.Text = "Appointment Scheduler";
             // 
+            // startTimePick
+            // 
+            this.startTimePick.CustomFormat = "MM/dd/yyyy hh:mm tt";
+            this.startTimePick.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startTimePick.Location = new System.Drawing.Point(280, 287);
+            this.startTimePick.Name = "startTimePick";
+            this.startTimePick.Size = new System.Drawing.Size(226, 26);
+            this.startTimePick.TabIndex = 34;
+            // 
+            // endTimePick
+            // 
+            this.endTimePick.CustomFormat = "MM/dd/yyyy hh:mm tt";
+            this.endTimePick.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endTimePick.Location = new System.Drawing.Point(280, 369);
+            this.endTimePick.Name = "endTimePick";
+            this.endTimePick.Size = new System.Drawing.Size(226, 26);
+            this.endTimePick.TabIndex = 35;
+            // 
+            // custComboBox
+            // 
+            this.custComboBox.FormattingEnabled = true;
+            this.custComboBox.Location = new System.Drawing.Point(280, 116);
+            this.custComboBox.Name = "custComboBox";
+            this.custComboBox.Size = new System.Drawing.Size(331, 28);
+            this.custComboBox.TabIndex = 36;
+            // 
+            // deleteBtn
+            // 
+            this.deleteBtn.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.deleteBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.deleteBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.deleteBtn.Location = new System.Drawing.Point(1312, 507);
+            this.deleteBtn.Name = "deleteBtn";
+            this.deleteBtn.Size = new System.Drawing.Size(87, 47);
+            this.deleteBtn.TabIndex = 37;
+            this.deleteBtn.Text = "Delete";
+            this.deleteBtn.UseVisualStyleBackColor = false;
+            this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
+            // 
             // AppointmentsFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.ClientSize = new System.Drawing.Size(1504, 606);
+            this.Controls.Add(this.deleteBtn);
+            this.Controls.Add(this.custComboBox);
+            this.Controls.Add(this.endTimePick);
+            this.Controls.Add(this.startTimePick);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.appointmentsDGV);
@@ -230,13 +254,10 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.apptTextBox);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.startTimeTextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.endTimeTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.cancelBtn);
-            this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label6);
             this.Name = "AppointmentsFrom";
             this.Text = "Schedule an Appointment ";
@@ -248,14 +269,11 @@
 
         #endregion
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox endTimeTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox startTimeTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox apptTextBox;
         private System.Windows.Forms.Label label5;
@@ -263,5 +281,9 @@
         private System.Windows.Forms.DataGridView appointmentsDGV;
         private System.Windows.Forms.Button editBtn;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DateTimePicker startTimePick;
+        private System.Windows.Forms.DateTimePicker endTimePick;
+        private System.Windows.Forms.ComboBox custComboBox;
+        private System.Windows.Forms.Button deleteBtn;
     }
 }

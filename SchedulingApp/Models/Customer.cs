@@ -35,6 +35,8 @@ namespace SchedulingApp.Models
 
         // Constructor for creating a new customer
 
+        public Customer() { }
+
         public Customer(int customerID, string customerName, int addressID, bool active, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
             CustomerID = customerID;
