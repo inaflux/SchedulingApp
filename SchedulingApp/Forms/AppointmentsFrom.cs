@@ -6,16 +6,17 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 using static SchedulingApp.LoginForm;
 
 namespace SchedulingApp
 {
     public partial class AppointmentsFrom : Form
     {
-        private string userName; // Store the username of the logged-in user
         public AppointmentsFrom(int customerId)
         {
             InitializeComponent();
@@ -26,7 +27,7 @@ namespace SchedulingApp
            // int userId = GlobalState.CurrentUserID;
            LayoutAppointmentsDGV();
           
-
+            int userId = GlobalState.CurrentUserID;
 
 
 
@@ -126,16 +127,36 @@ namespace SchedulingApp
                     CustomerID = customerId,
                     UserID = userId,
                     Title = "Untitled", // Provide a default value for the title
+                    Description = "No description", // Provide a default value for the description
+                    Location = "No location", // Provide a default value for the location
+                    Contact = "No contact", // Provide a default value for the contact
                     Type = type,
+                    URL = "No URL", // Provide a default value for the URL
                     Start = start,
                     End = end,
                     CreateDate = DateTime.Now,
-                    CreatedBy = userName,
+                    CreatedBy = userId.ToString(),
                     LastUpdate = DateTime.Now,
-                    LastUpdatedBy = userName
+                    LastUpdatedBy = userId.ToString() // Replace with the logged-in user's username
                 };
 
-                AppointmentRepo.AddAppointment(newAppointment);
+                    //appointmentId int AI PK
+                    //customerId int
+                    // userId int
+                    //title varchar(255)
+                    //description text
+                    //location text
+                    //contact text
+                    //type text
+                    //url varchar(255) 
+                    //start datetime
+                    //end datetime
+                    //createDate datetime
+                    //createdBy varchar(40) 
+                    //lastUpdate timestamp
+                    //lastUpdateBy varchar(40)
+
+//                AppointmentRepo.AddAppointment(newAppointment);
                 MessageBox.Show("Appointment added successfully!");
 
                 // Refresh the DataGridView
@@ -174,7 +195,7 @@ namespace SchedulingApp
                     Start = start,
                     End = end,
                     LastUpdate = DateTime.Now,
-                    LastUpdatedBy = userName // Replace with the logged-in user's username
+                    LastUpdatedBy = userId.ToString() // Replace with the logged-in user's username
                 };
 
                 AppointmentRepo.UpdateAppointment(updatedAppointment);
