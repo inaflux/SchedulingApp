@@ -24,10 +24,14 @@ namespace SchedulingApp
             LoadAppointmentsData();
             LoadCustomers();
             _customerId = customerId; // Set the customer ID
-           // int userId = GlobalState.CurrentUserID;
-           LayoutAppointmentsDGV();
           
-            int userId = GlobalState.CurrentUserID;
+           LayoutAppointmentsDGV();
+           LoadUsers();
+            LoadAppointmentTypes();
+
+            int currentUserID = GlobalState.CurrentUserID;
+            
+            int userId = (int)userIDComboBox.SelectedValue;
 
 
 
@@ -107,59 +111,28 @@ namespace SchedulingApp
         {
             try
             {
-                // Validate business hours
-                if (!IsWithinBusinessHours(start, end))
-                {
-                    MessageBox.Show("Appointments must be scheduled during business hours (9 AM to 5 PM EST, Monday to Friday).");
-                    return;
-                }
+                // ... validation code ...
 
-                // Validate overlapping appointments
-                if (IsOverlappingAppointment(customerId, start, end))
-                {
-                    MessageBox.Show("This appointment overlaps with an existing appointment.");
-                    return;
-                }
-
-                // Add the appointment to the database
                 var newAppointment = new Appointment
                 {
                     CustomerID = customerId,
                     UserID = userId,
-                    Title = "Untitled", // Provide a default value for the title
-                    Description = "No description", // Provide a default value for the description
-                    Location = "No location", // Provide a default value for the location
-                    Contact = "No contact", // Provide a default value for the contact
+                    Title = "Untitled",
+                    Description = "No description",
+                    Location = "No location",
+                    Contact = "No contact",
                     Type = type,
-                    URL = "No URL", // Provide a default value for the URL
+                    URL = "No URL",
                     Start = start,
                     End = end,
                     CreateDate = DateTime.Now,
-                    CreatedBy = userId.ToString(),
+                    CreatedBy = GlobalState.CurrentUsername,
                     LastUpdate = DateTime.Now,
-                    LastUpdatedBy = userId.ToString() // Replace with the logged-in user's username
+                    LastUpdatedBy = GlobalState.CurrentUsername
                 };
 
-                    //appointmentId int AI PK
-                    //customerId int
-                    // userId int
-                    //title varchar(255)
-                    //description text
-                    //location text
-                    //contact text
-                    //type text
-                    //url varchar(255) 
-                    //start datetime
-                    //end datetime
-                    //createDate datetime
-                    //createdBy varchar(40) 
-                    //lastUpdate timestamp
-                    //lastUpdateBy varchar(40)
-
-//                AppointmentRepo.AddAppointment(newAppointment);
+                AppointmentRepo.AddAppointment(newAppointment);
                 MessageBox.Show("Appointment added successfully!");
-
-                // Refresh the DataGridView
                 LoadAppointmentsData();
             }
             catch (Exception ex)
@@ -195,7 +168,7 @@ namespace SchedulingApp
                     Start = start,
                     End = end,
                     LastUpdate = DateTime.Now,
-                    LastUpdatedBy = userId.ToString() // Replace with the logged-in user's username
+                    LastUpdatedBy = GlobalState.CurrentUsername // Replace with the logged-in user's username
                 };
 
                 AppointmentRepo.UpdateAppointment(updatedAppointment);
@@ -230,6 +203,7 @@ namespace SchedulingApp
         {
             try
             {
+                int userId = (int)userIDComboBox.SelectedValue;
                 // Validate customer selection
                 if (custComboBox.SelectedValue == null || !int.TryParse(custComboBox.SelectedValue.ToString(), out int customerId))
                 {
@@ -238,15 +212,16 @@ namespace SchedulingApp
                 }
 
                 // Validate type input
-                if (string.IsNullOrWhiteSpace(apptTextBox.Text))
-                {
-                    MessageBox.Show("Please enter the appointment type.");
-                    return;
-                }
+                //if (string.IsNullOrWhiteSpace(apptTextBox.Text))
+                //{
+                //    MessageBox.Show("Please enter the appointment type.");
+                //    return;
+                //}
 
                 // Get the appointment type
-                string type = apptTextBox.Text;
+                string type = apptComboBox.Text;
 
+                // Get the start and end times
                 // Get the start and end times
                 DateTime start = startTimePick.Value;
                 DateTime end = endTimePick.Value;
@@ -258,15 +233,37 @@ namespace SchedulingApp
                     return;
                 }
 
-                // Validate user ID
-                if (string.IsNullOrWhiteSpace(userIDTextBox.Text) || !int.TryParse(userIDTextBox.Text, out int userId))
+                // Get the selected user ID from the combo box
+                if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
                 {
-                    MessageBox.Show("Please enter a valid user ID.");
+                    MessageBox.Show("Please select a valid user.");
                     return;
                 }
 
                 // Add the appointment
                 AddAppointment(customerId, type, start, end, userId);
+                DateTime start = startTimePick.Value;
+                DateTime end = endTimePick.Value;
+
+              
+
+                // Validate that the end time is after the start time
+                if (end <= start)
+                {
+                    MessageBox.Show("The end time must be after the start time.");
+                    return;
+                }
+
+                // Get the selected user ID from the combo box
+                if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
+                {
+                    MessageBox.Show("Please select a valid user.");
+                    return;
+                }
+
+                // Add the appointment
+                AddAppointment(customerId, type, start, end, userId);
+                
             }
             catch (Exception ex)
             {
@@ -300,6 +297,49 @@ namespace SchedulingApp
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while loading customers: {ex.Message}");
+            }
+        }
+        private void LoadUsers()
+        {
+            try
+            {
+                var users = UserRepo.GetUserID();
+                if (users.Count == 0)
+                {
+                    MessageBox.Show("No users found.");
+                    return;
+                }
+                userIDComboBox.DataSource = users;
+                userIDComboBox.DisplayMember = "UserName"; // Show the username
+                userIDComboBox.ValueMember = "UserID";     // Use the user ID as value
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading users: {ex.Message}");
+            }
+        }
+
+
+
+        private void LoadAppointmentTypes()
+        {
+            try
+            {
+                // Retrieve the list of appointment types from the database
+                var appointmentTypes = AppointmentRepo.GetAllTypes();
+                if (appointmentTypes.Count == 0)
+                {
+                    MessageBox.Show("No appointment types found.");
+                    return;
+                }
+                // Bind the appointment types to the ComboBox
+                apptComboBox.DataSource = appointmentTypes;
+                apptComboBox.DisplayMember = "Type"; // Display appointment type
+                apptComboBox.ValueMember = "Type"; // Use appointment type as the value
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while loading appointment types: {ex.Message}");
             }
         }
 
@@ -344,7 +384,7 @@ namespace SchedulingApp
 
                 // Populate the form's input fields
                 custComboBox.SelectedValue = customerId;
-                apptTextBox.Text = type;
+                apptComboBox.SelectedValue = type;
                 startTimePick.Value = start;
                 endTimePick.Value = end;
 
@@ -352,7 +392,7 @@ namespace SchedulingApp
                 saveBtn.Click -= saveBtn_Click; // Unsubscribe from the Add functionality
                 saveBtn.Click += (s, args) =>
                 {
-                    UpdateAppointment(appointmentId, customerId, apptTextBox.Text, startTimePick.Value, endTimePick.Value, userId);
+                    UpdateAppointment(appointmentId, customerId, type, startTimePick.Value, endTimePick.Value, userId);
                 };
 
                 MessageBox.Show("Edit the appointment details and click 'Save' to update.");
@@ -383,6 +423,9 @@ namespace SchedulingApp
                 if (result == DialogResult.Yes)
                 {
                     // Delete the appointment
+                    int userId = (int)userIDComboBox.SelectedValue;
+                    string type = apptComboBox.SelectedValue.ToString();
+                    int customerId = (int)custComboBox.SelectedValue;
                     DeleteAppointment(appointmentId);
                 }
             }

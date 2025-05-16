@@ -32,6 +32,9 @@ namespace SchedulingApp.Models
 
         public string LastUpdatedBy { get; set; }
 
+        // Constructor
+        public User() { }
+
         public User(int userID, string userName, string password, bool active, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
             UserID = userID;

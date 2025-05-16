@@ -35,9 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.apptTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.userIDTextBox = new System.Windows.Forms.TextBox();
             this.appointmentsDGV = new System.Windows.Forms.DataGridView();
             this.editBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,6 +43,8 @@
             this.endTimePick = new System.Windows.Forms.DateTimePicker();
             this.custComboBox = new System.Windows.Forms.ComboBox();
             this.deleteBtn = new System.Windows.Forms.Button();
+            this.userIDComboBox = new System.Windows.Forms.ComboBox();
+            this.apptComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentsDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,14 +131,6 @@
             this.label4.TabIndex = 28;
             this.label4.Text = "Appointment Type:";
             // 
-            // apptTextBox
-            // 
-            this.apptTextBox.Location = new System.Drawing.Point(350, 189);
-            this.apptTextBox.Multiline = true;
-            this.apptTextBox.Name = "apptTextBox";
-            this.apptTextBox.Size = new System.Drawing.Size(261, 39);
-            this.apptTextBox.TabIndex = 27;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -148,14 +140,6 @@
             this.label5.Size = new System.Drawing.Size(83, 34);
             this.label5.TabIndex = 30;
             this.label5.Text = "User:";
-            // 
-            // userIDTextBox
-            // 
-            this.userIDTextBox.Location = new System.Drawing.Point(214, 445);
-            this.userIDTextBox.Multiline = true;
-            this.userIDTextBox.Name = "userIDTextBox";
-            this.userIDTextBox.Size = new System.Drawing.Size(331, 39);
-            this.userIDTextBox.TabIndex = 29;
             // 
             // appointmentsDGV
             // 
@@ -236,12 +220,30 @@
             this.deleteBtn.UseVisualStyleBackColor = false;
             this.deleteBtn.Click += new System.EventHandler(this.deleteBtn_Click);
             // 
+            // userIDComboBox
+            // 
+            this.userIDComboBox.FormattingEnabled = true;
+            this.userIDComboBox.Location = new System.Drawing.Point(197, 456);
+            this.userIDComboBox.Name = "userIDComboBox";
+            this.userIDComboBox.Size = new System.Drawing.Size(270, 28);
+            this.userIDComboBox.TabIndex = 38;
+            // 
+            // apptComboBox
+            // 
+            this.apptComboBox.FormattingEnabled = true;
+            this.apptComboBox.Location = new System.Drawing.Point(341, 195);
+            this.apptComboBox.Name = "apptComboBox";
+            this.apptComboBox.Size = new System.Drawing.Size(270, 28);
+            this.apptComboBox.TabIndex = 39;
+            // 
             // AppointmentsFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.ClientSize = new System.Drawing.Size(1504, 606);
+            this.Controls.Add(this.apptComboBox);
+            this.Controls.Add(this.userIDComboBox);
             this.Controls.Add(this.deleteBtn);
             this.Controls.Add(this.custComboBox);
             this.Controls.Add(this.endTimePick);
@@ -250,9 +252,7 @@
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.appointmentsDGV);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.userIDTextBox);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.apptTextBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -275,9 +275,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox apptTextBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox userIDTextBox;
         private System.Windows.Forms.DataGridView appointmentsDGV;
         private System.Windows.Forms.Button editBtn;
         private System.Windows.Forms.Label label7;
@@ -285,5 +283,7 @@
         private System.Windows.Forms.DateTimePicker endTimePick;
         private System.Windows.Forms.ComboBox custComboBox;
         private System.Windows.Forms.Button deleteBtn;
+        private System.Windows.Forms.ComboBox userIDComboBox;
+        private System.Windows.Forms.ComboBox apptComboBox;
     }
 }

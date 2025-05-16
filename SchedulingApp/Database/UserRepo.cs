@@ -50,5 +50,29 @@ namespace SchedulingApp.Database
             Console.WriteLine("Executing query: " + query);
 
         }
+
+        public static List<User> GetUserID()
+        {
+           var users = new List<User>();
+            var connection = DBConnection.GetConnection();
+
+            string query = "SELECT userId FROM user";
+            using (var cmd = new MySqlCommand(query, connection))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        users.Add(new User
+                        {
+                            UserID = reader.GetInt32("userId"),
+                           
+                        });
+                    }
+                    
+                }
+            }
+           return users;
+        }
     }
 }

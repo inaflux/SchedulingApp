@@ -107,4 +107,26 @@ public static class AppointmentRepo
         }
         Console.WriteLine("Executing query: " + query);
     }
+
+    public static List<Appointment> GetAllTypes()
+    {
+        var connection = DBConnection.GetConnection();
+        var types = new List<Appointment>();
+        string query = "SELECT DISTINCT type FROM appointment";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    types.Add(new Appointment
+                    {
+                        Type = reader.GetString("type")
+                    });
+                }
+            }
+        }
+        
+        return types;
+    }
 }
