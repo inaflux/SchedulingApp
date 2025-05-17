@@ -2,6 +2,8 @@ using MySql.Data.MySqlClient;
 using SchedulingApp.Database;
 using SchedulingApp.Models;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public static class CityRepo
 {
@@ -78,5 +80,29 @@ public static class CityRepo
         return AddCity(newCity);
     }
 
-  
+    public static List<City> GetAllCities()
+    {
+        var cities = new List<City>();
+        var connection = DBConnection.GetConnection();
+
+        string query = "SELECT * FROM city";
+        using (var cmd = new MySqlCommand(query, connection))
+            
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    cities.Add(new City
+                    {
+                        CityID = reader.GetInt32("cityId"),
+                        CityName = reader.GetString("city"),
+                        // Add other fields as needed
+                    });
+                }
+            }
+        
+        return cities;
+    }
+
+
 }

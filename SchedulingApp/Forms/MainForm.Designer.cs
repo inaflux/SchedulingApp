@@ -148,6 +148,7 @@
             this.reportsBtn.TabIndex = 11;
             this.reportsBtn.Text = "Generate Reports";
             this.reportsBtn.UseVisualStyleBackColor = false;
+            this.reportsBtn.Click += new System.EventHandler(this.reportsBtn_Click);
             // 
             // searchBtn
             // 

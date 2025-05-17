@@ -21,21 +21,12 @@ namespace SchedulingApp
         {
             InitializeComponent();
 
-            LoadAppointmentsData();
+            _customerId = customerId; // Set this first!
             LoadCustomers();
-            _customerId = customerId; // Set the customer ID
-          
-           LayoutAppointmentsDGV();
-           LoadUsers();
+            LoadUsers();
             LoadAppointmentTypes();
-
-            int currentUserID = GlobalState.CurrentUserID;
-            
-            int userId = (int)userIDComboBox.SelectedValue;
-
-
-
-
+            LoadAppointmentsData();   // Now it will use the correct _customerId
+            LayoutAppointmentsDGV();
         }
 
         private void LayoutAppointmentsDGV()
@@ -203,7 +194,6 @@ namespace SchedulingApp
         {
             try
             {
-                int userId = (int)userIDComboBox.SelectedValue;
                 // Validate customer selection
                 if (custComboBox.SelectedValue == null || !int.TryParse(custComboBox.SelectedValue.ToString(), out int customerId))
                 {
@@ -211,17 +201,21 @@ namespace SchedulingApp
                     return;
                 }
 
-                // Validate type input
-                //if (string.IsNullOrWhiteSpace(apptTextBox.Text))
-                //{
-                //    MessageBox.Show("Please enter the appointment type.");
-                //    return;
-                //}
+                // Validate user selection
+                if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
+                {
+                    MessageBox.Show("Please select a valid user.");
+                    return;
+                }
 
-                // Get the appointment type
-                string type = apptComboBox.Text;
+                // Validate appointment type selection
+                if (apptComboBox.SelectedValue == null)
+                {
+                    MessageBox.Show("Please select a valid appointment type.");
+                    return;
+                }
+                string type = apptComboBox.SelectedValue.ToString();
 
-                // Get the start and end times
                 // Get the start and end times
                 DateTime start = startTimePick.Value;
                 DateTime end = endTimePick.Value;
@@ -233,37 +227,8 @@ namespace SchedulingApp
                     return;
                 }
 
-                // Get the selected user ID from the combo box
-                if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
-                {
-                    MessageBox.Show("Please select a valid user.");
-                    return;
-                }
-
                 // Add the appointment
                 AddAppointment(customerId, type, start, end, userId);
-                DateTime start = startTimePick.Value;
-                DateTime end = endTimePick.Value;
-
-              
-
-                // Validate that the end time is after the start time
-                if (end <= start)
-                {
-                    MessageBox.Show("The end time must be after the start time.");
-                    return;
-                }
-
-                // Get the selected user ID from the combo box
-                if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
-                {
-                    MessageBox.Show("Please select a valid user.");
-                    return;
-                }
-
-                // Add the appointment
-                AddAppointment(customerId, type, start, end, userId);
-                
             }
             catch (Exception ex)
             {

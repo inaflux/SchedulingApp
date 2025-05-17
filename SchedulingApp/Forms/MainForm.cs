@@ -130,6 +130,12 @@ private void scheduleBtn_Click(object sender, EventArgs e)
             AppointmentsFrom scheduleForm = new AppointmentsFrom(customerId);
             scheduleForm.ShowDialog();
         }
+
+        private void reportsBtn_Click(object sender, EventArgs e)
+        {
+            ReportsForm reportsForm = new ReportsForm();
+            reportsForm.ShowDialog();
+        }
     }
     
 }

@@ -29,6 +29,8 @@ namespace SchedulingApp.Models
 
         public string LastUpdatedBy { get; set; }
 
+        public City() { }
+
         public City(int cityID, string cityName, int countryID, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdatedBy)
         {
             CityID = cityID;

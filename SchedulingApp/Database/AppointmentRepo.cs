@@ -128,5 +128,69 @@ public static class AppointmentRepo
         }
         
         return types;
+
+    }
+
+
+    public static List<Appointment> GetAllAppointments()
+    {
+        var appointments = new List<Appointment>();
+        var connection = DBConnection.GetConnection();
+      
+            
+            string query = "SELECT * FROM appointment";
+            using (var cmd = new MySqlCommand(query, connection))
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    appointments.Add(new Appointment
+                    {
+                        AppointmentID = reader.GetInt32("appointmentId"),
+                        CustomerID = reader.GetInt32("customerId"),
+                        UserID = reader.GetInt32("userId"),
+                        Type = reader.GetString("type"),
+                        Start = reader.GetDateTime("start"),
+                        End = reader.GetDateTime("end"),
+                        // Add other fields as needed
+                    });
+                }
+            }
+        return appointments;
+    }
+    public static List<Appointment> GetAppointmentsByUserId(int userId)
+    {
+        var connection = DBConnection.GetConnection();
+        var appointments = new List<Appointment>();
+        string query = "SELECT * FROM appointment WHERE userID = @userID";
+        using (var cmd = new MySqlCommand(query, connection))
+        {
+            cmd.Parameters.AddWithValue("@userID", userId);
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    appointments.Add(new Appointment(
+                        reader.GetInt32("appointmentID"),
+                        reader.GetInt32("customerID"),
+                        reader.GetInt32("userID"),
+                        reader.GetString("title"),
+                        reader.GetString("description"),
+                        reader.GetString("location"),
+                        reader.GetString("contact"),
+                        reader.GetString("type"),
+                        reader.GetString("url"),
+                        reader.GetDateTime("start"),
+                        reader.GetDateTime("end"),
+                        reader.GetDateTime("createDate"),
+                        reader.GetString("createdBy"),
+                        reader.GetDateTime("lastUpdate"),
+                        reader.GetString("lastUpdateBy")
+                    ));
+                }
+            }
+        }
+        Console.WriteLine("Executing query: " + query);
+        return appointments;
     }
 }

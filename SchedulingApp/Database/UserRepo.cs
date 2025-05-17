@@ -53,10 +53,9 @@ namespace SchedulingApp.Database
 
         public static List<User> GetUserID()
         {
-           var users = new List<User>();
+            var users = new List<User>();
             var connection = DBConnection.GetConnection();
-
-            string query = "SELECT userId FROM user";
+            string query = "SELECT userId, userName FROM user";
             using (var cmd = new MySqlCommand(query, connection))
             {
                 using (var reader = cmd.ExecuteReader())
@@ -66,13 +65,12 @@ namespace SchedulingApp.Database
                         users.Add(new User
                         {
                             UserID = reader.GetInt32("userId"),
-                           
+                            UserName = reader.GetString("userName")
                         });
                     }
-                    
                 }
             }
-           return users;
+            return users;
         }
     }
 }
