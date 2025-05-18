@@ -34,6 +34,7 @@ namespace SchedulingApp.Database
             {
                 // Log or rethrow the exception for the calling code to handle
                 throw new Exception("Failed to open database connection.", ex);
+            
             }
         }
 

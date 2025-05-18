@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.customersDGV = new System.Windows.Forms.DataGridView();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,9 +41,15 @@
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.exitButton = new System.Windows.Forms.Button();
             this.currentDateTimeLabel = new System.Windows.Forms.Label();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
+            this.mySqlCommand2 = new MySql.Data.MySqlClient.MySqlCommand();
+            this.allViewRadioBtn = new System.Windows.Forms.RadioButton();
+            this.weekViewRadioBtn = new System.Windows.Forms.RadioButton();
+            this.monthViewRadioBtn = new System.Windows.Forms.RadioButton();
+            this.calendarDGV = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.customersDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.calendarDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // customersDGV
@@ -52,18 +58,18 @@
             this.customersDGV.GridColor = System.Drawing.SystemColors.ControlText;
             this.customersDGV.Location = new System.Drawing.Point(13, 167);
             this.customersDGV.Name = "customersDGV";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.customersDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.MediumTurquoise;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customersDGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.customersDGV.RowHeadersWidth = 62;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.customersDGV.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.customersDGV.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.customersDGV.RowTemplate.Height = 28;
             this.customersDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.customersDGV.Size = new System.Drawing.Size(1125, 476);
@@ -158,17 +164,18 @@
             this.searchBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.searchBtn.Location = new System.Drawing.Point(680, 17);
             this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(94, 58);
+            this.searchBtn.Size = new System.Drawing.Size(94, 42);
             this.searchBtn.TabIndex = 13;
             this.searchBtn.Text = "Search";
             this.searchBtn.UseVisualStyleBackColor = false;
+            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click_1);
             // 
             // searchTextBox
             // 
             this.searchTextBox.Location = new System.Drawing.Point(786, 17);
             this.searchTextBox.Multiline = true;
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(352, 59);
+            this.searchTextBox.Size = new System.Drawing.Size(352, 43);
             this.searchTextBox.TabIndex = 14;
             // 
             // exitButton
@@ -177,9 +184,9 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.exitButton.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.exitButton.Location = new System.Drawing.Point(868, 761);
+            this.exitButton.Location = new System.Drawing.Point(1040, 925);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(193, 129);
+            this.exitButton.Size = new System.Drawing.Size(98, 50);
             this.exitButton.TabIndex = 21;
             this.exitButton.Text = "EXIT";
             this.exitButton.UseVisualStyleBackColor = false;
@@ -188,17 +195,11 @@
             // currentDateTimeLabel
             // 
             this.currentDateTimeLabel.AutoSize = true;
-            this.currentDateTimeLabel.Location = new System.Drawing.Point(864, 680);
+            this.currentDateTimeLabel.Location = new System.Drawing.Point(824, 944);
             this.currentDateTimeLabel.Name = "currentDateTimeLabel";
             this.currentDateTimeLabel.Size = new System.Drawing.Size(191, 22);
             this.currentDateTimeLabel.TabIndex = 23;
             this.currentDateTimeLabel.Text = "Current Time and Date";
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(105, 680);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 24;
             // 
             // mySqlCommand1
             // 
@@ -207,13 +208,77 @@
             this.mySqlCommand1.EnableCaching = false;
             this.mySqlCommand1.Transaction = null;
             // 
+            // mySqlCommand2
+            // 
+            this.mySqlCommand2.CacheAge = 0;
+            this.mySqlCommand2.Connection = null;
+            this.mySqlCommand2.EnableCaching = false;
+            this.mySqlCommand2.Transaction = null;
+            // 
+            // allViewRadioBtn
+            // 
+            this.allViewRadioBtn.AutoSize = true;
+            this.allViewRadioBtn.Location = new System.Drawing.Point(26, 744);
+            this.allViewRadioBtn.Name = "allViewRadioBtn";
+            this.allViewRadioBtn.Size = new System.Drawing.Size(206, 26);
+            this.allViewRadioBtn.TabIndex = 25;
+            this.allViewRadioBtn.TabStop = true;
+            this.allViewRadioBtn.Text = "All Appointment View";
+            this.allViewRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // weekViewRadioBtn
+            // 
+            this.weekViewRadioBtn.AutoSize = true;
+            this.weekViewRadioBtn.Location = new System.Drawing.Point(26, 796);
+            this.weekViewRadioBtn.Name = "weekViewRadioBtn";
+            this.weekViewRadioBtn.Size = new System.Drawing.Size(187, 26);
+            this.weekViewRadioBtn.TabIndex = 26;
+            this.weekViewRadioBtn.TabStop = true;
+            this.weekViewRadioBtn.Text = "Current Week View";
+            this.weekViewRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // monthViewRadioBtn
+            // 
+            this.monthViewRadioBtn.AutoSize = true;
+            this.monthViewRadioBtn.Location = new System.Drawing.Point(26, 852);
+            this.monthViewRadioBtn.Name = "monthViewRadioBtn";
+            this.monthViewRadioBtn.Size = new System.Drawing.Size(194, 26);
+            this.monthViewRadioBtn.TabIndex = 27;
+            this.monthViewRadioBtn.TabStop = true;
+            this.monthViewRadioBtn.Text = "Current Month View";
+            this.monthViewRadioBtn.UseVisualStyleBackColor = true;
+            // 
+            // calendarDGV
+            // 
+            this.calendarDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.calendarDGV.Location = new System.Drawing.Point(286, 659);
+            this.calendarDGV.Name = "calendarDGV";
+            this.calendarDGV.RowHeadersWidth = 62;
+            this.calendarDGV.RowTemplate.Height = 28;
+            this.calendarDGV.Size = new System.Drawing.Size(852, 251);
+            this.calendarDGV.TabIndex = 28;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Roboto", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 659);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(262, 43);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Calendar View";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.ClientSize = new System.Drawing.Size(1170, 987);
-            this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.calendarDGV);
+            this.Controls.Add(this.monthViewRadioBtn);
+            this.Controls.Add(this.weekViewRadioBtn);
+            this.Controls.Add(this.allViewRadioBtn);
             this.Controls.Add(this.currentDateTimeLabel);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.searchTextBox);
@@ -230,6 +295,7 @@
             this.Name = "MainForm";
             this.Text = "Main Form";
             ((System.ComponentModel.ISupportInitialize)(this.customersDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.calendarDGV)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -248,8 +314,13 @@
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Label currentDateTimeLabel;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
+        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand2;
+        private System.Windows.Forms.RadioButton allViewRadioBtn;
+        private System.Windows.Forms.RadioButton weekViewRadioBtn;
+        private System.Windows.Forms.RadioButton monthViewRadioBtn;
+        private System.Windows.Forms.DataGridView calendarDGV;
+        private System.Windows.Forms.Label label2;
     }
 }
 

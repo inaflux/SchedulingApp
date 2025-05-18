@@ -77,7 +77,9 @@ public static class CityRepo
         var newCity = new City(0, cityName, countryID, DateTime.Now, "admin", DateTime.Now, "admin");
         Console.WriteLine("Executing query: " + query);
 
+        DBConnection.CloseConnection();
         return AddCity(newCity);
+
     }
 
     public static List<City> GetAllCities()

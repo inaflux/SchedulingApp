@@ -97,6 +97,7 @@ namespace SchedulingApp
 
             if (username == "test" && password == "test")
             {
+                LogLogin(username); // Replace 'username' with your actual variable
                 GlobalState.CurrentUserID = 1; // Example: Set the logged-in user's ID
                 GlobalState.CurrentUsername = username;
 
@@ -107,6 +108,19 @@ namespace SchedulingApp
             else
             {
                 MessageBox.Show("Invalid username or password.");
+            }
+        }
+        public static void LogLogin(string username)
+        {
+            string logPath = "Login_History.txt";
+            string logEntry = $"{DateTime.UtcNow:u} - {username}";
+            try
+            {
+                System.IO.File.AppendAllText(logPath, logEntry + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to write login history: " + ex.Message);
             }
         }
 
