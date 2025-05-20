@@ -3,6 +3,7 @@ using SchedulingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -21,24 +22,23 @@ namespace SchedulingApp
         {
             InitializeComponent();
 
-            _customerId = customerId; // Set this first!
+            _customerId = customerId;
             LoadCustomers();
             LoadUsers();
             LoadAppointmentTypes();
-            LoadAppointmentsData();   // Now it will use the correct _customerId
+            custComboBox.SelectedIndexChanged += custComboBox_SelectedIndexChanged;
+            LoadAppointmentsData();
             LayoutAppointmentsDGV();
         }
 
         private void LayoutAppointmentsDGV()
         {
-            // Set the headers for the required columns
             appointmentsDGV.Columns["Type"].HeaderText = "Type";
             appointmentsDGV.Columns["CustomerID"].HeaderText = "Customer";
             appointmentsDGV.Columns["Start"].HeaderText = "Start Time";
             appointmentsDGV.Columns["End"].HeaderText = "End Time";
             appointmentsDGV.Columns["UserID"].HeaderText = "UserID";
 
-            // Hide all other columns
             foreach (DataGridViewColumn column in appointmentsDGV.Columns)
             {
                 if (column.Name != "Type" && column.Name != "CustomerID" && column.Name != "Start" && column.Name != "End" && column.Name != "UserID")
@@ -47,24 +47,24 @@ namespace SchedulingApp
                 }
             }
 
-            // Adjust column widths
             appointmentsDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
-        private int _customerId; // Store the customer ID
-
-
-
-        private void LoadAppointmentsData()
+        private int _customerId; 
+      private void LoadAppointmentsData()
         {
             try
             {
-                // Use the stored customer ID to fetch appointments
                 List<Appointment> appointments = AppointmentRepo.GetAppointmentsByCustomerId(_customerId);
 
-                // Bind the data to the DataGridView
-                appointmentsDGV.DataSource = appointments;
+                //Convert from UTC to local time for display in DGV
+                foreach (var appt in appointments)
+                    {
+                        appt.Start = appt.Start.ToLocalTime();
+                        appt.End = appt.End.ToLocalTime();
+                    }
 
-                // Layout the DataGridView to show only the required columns
+                appointmentsDGV.DataSource = null;
+                appointmentsDGV.DataSource = appointments;
                 LayoutAppointmentsDGV();
             }
             catch (Exception ex)
@@ -72,20 +72,22 @@ namespace SchedulingApp
                 MessageBox.Show($"An error occurred while loading appointments: {ex.Message}");
             }
         }
-        private bool IsWithinBusinessHours(DateTime start, DateTime end)
+        private bool BusinessHours(DateTime startUtc, DateTime endUtc)
         {
             TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            DateTime startEST = TimeZoneInfo.ConvertTimeFromUtc(start.ToUniversalTime(), est);
-            DateTime endEST = TimeZoneInfo.ConvertTimeFromUtc(end.ToUniversalTime(), est);
+            DateTime startEST = TimeZoneInfo.ConvertTimeFromUtc(startUtc, est);
+            DateTime endEST = TimeZoneInfo.ConvertTimeFromUtc(endUtc, est);
 
-            // Check if the appointment is within business hours (9 AM to 5 PM, Monday to Friday)
-            if (startEST.Hour < 9 || endEST.Hour > 17 || startEST.DayOfWeek == DayOfWeek.Saturday || startEST.DayOfWeek == DayOfWeek.Sunday)
+            // Business hours: 8 AM to 5 PM, Monday–Friday
+            if (startEST.Hour < 8 || endEST.Hour > 17 ||
+                startEST.DayOfWeek == DayOfWeek.Saturday ||
+                startEST.DayOfWeek == DayOfWeek.Sunday)
             {
                 return false;
             }
             return true;
         }
-        private bool IsOverlappingAppointment(int customerId, DateTime start, DateTime end)
+        private bool AppointmentOverlap(int customerId, DateTime start, DateTime end)
         {
             var appointments = AppointmentRepo.GetAppointmentsByCustomerId(customerId);
 
@@ -93,7 +95,7 @@ namespace SchedulingApp
             {
                 if (start < appointment.End && end > appointment.Start)
                 {
-                    return true; // Overlapping appointment found
+                    return true; 
                 }
             }
             return false;
@@ -102,7 +104,12 @@ namespace SchedulingApp
         {
             try
             {
-                // ... validation code ...
+                
+                if (AppointmentOverlap(customerId, start, end))
+                {
+                    MessageBox.Show("This appointment overlaps with an existing appointment.", "Overlap Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 var newAppointment = new Appointment
                 {
@@ -135,37 +142,43 @@ namespace SchedulingApp
         {
             try
             {
-                // Validate business hours
-                if (!IsWithinBusinessHours(start, end))
+
+                if (!BusinessHours(start, end))
                 {
-                    MessageBox.Show("Appointments must be scheduled during business hours (9 AM to 5 PM EST, Monday to Friday).");
+                    MessageBox.Show("Appointments must be scheduled during business hours (9 AM to 5 PM , Monday to Friday).");
                     return;
                 }
 
-                // Validate overlapping appointments
-                if (IsOverlappingAppointment(customerId, start, end))
+                if (AppointmentOverlap(customerId, start, end))
                 {
                     MessageBox.Show("This appointment overlaps with an existing appointment.");
                     return;
                 }
 
-                // Update the appointment in the database
+                
                 var updatedAppointment = new Appointment
                 {
                     AppointmentID = appointmentId,
                     CustomerID = customerId,
                     UserID = userId,
                     Type = type,
+                    Title = "Untitled", 
+                    Description = "No description", 
+                    Location = "No location", 
+                    Contact = "No contact", 
+                    URL = "No URL",
                     Start = start,
                     End = end,
+                    CreateDate = DateTime.Now,
+                    CreatedBy = GlobalState.CurrentUsername,
                     LastUpdate = DateTime.Now,
-                    LastUpdatedBy = GlobalState.CurrentUsername // Replace with the logged-in user's username
+                    LastUpdatedBy = GlobalState.CurrentUsername
                 };
 
                 AppointmentRepo.UpdateAppointment(updatedAppointment);
                 MessageBox.Show("Appointment updated successfully!");
 
-                // Refresh the DataGridView
+       
                 LoadAppointmentsData();
             }
             catch (Exception ex)
@@ -177,11 +190,10 @@ namespace SchedulingApp
         {
             try
             {
-                // Delete the appointment from the database
+               
                 AppointmentRepo.DeleteAppointment(appointmentId);
                 MessageBox.Show("Appointment deleted successfully!");
 
-                // Refresh the DataGridView
                 LoadAppointmentsData();
             }
             catch (Exception ex)
@@ -194,21 +206,19 @@ namespace SchedulingApp
         {
             try
             {
-                // Validate customer selection
+                
                 if (custComboBox.SelectedValue == null || !int.TryParse(custComboBox.SelectedValue.ToString(), out int customerId))
                 {
                     MessageBox.Show("Please select a valid customer.");
                     return;
                 }
 
-                // Validate user selection
                 if (userIDComboBox.SelectedValue == null || !int.TryParse(userIDComboBox.SelectedValue.ToString(), out int userId))
                 {
                     MessageBox.Show("Please select a valid user.");
                     return;
                 }
 
-                // Validate appointment type selection
                 if (apptComboBox.SelectedValue == null)
                 {
                     MessageBox.Show("Please select a valid appointment type.");
@@ -216,18 +226,15 @@ namespace SchedulingApp
                 }
                 string type = apptComboBox.SelectedValue.ToString();
 
-                // Get the start and end times
-                DateTime start = startTimePick.Value;
-                DateTime end = endTimePick.Value;
+                DateTime start = startTimePick.Value.ToUniversalTime();
+                DateTime end = endTimePick.Value.ToUniversalTime();
 
-                // Validate that the end time is after the start time
                 if (end <= start)
                 {
                     MessageBox.Show("The end time must be after the start time.");
                     return;
                 }
 
-                // Add the appointment
                 AddAppointment(customerId, type, start, end, userId);
             }
             catch (Exception ex)
@@ -254,16 +261,18 @@ namespace SchedulingApp
                     return;
                 }
 
-                // Bind the customers to the ComboBox
+                // Binds the customers to the ComboBox
                 custComboBox.DataSource = customers;
-                custComboBox.DisplayMember = "CustomerName"; // Display customer name
-                custComboBox.ValueMember = "CustomerID"; // Use customer ID as the value
+                custComboBox.DisplayMember = "CustomerName"; 
+                custComboBox.ValueMember = "CustomerID"; 
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while loading customers: {ex.Message}");
             }
         }
+
+        //load users into the userIDComboBox
         private void LoadUsers()
         {
             try
@@ -275,8 +284,8 @@ namespace SchedulingApp
                     return;
                 }
                 userIDComboBox.DataSource = users;
-                userIDComboBox.DisplayMember = "UserName"; // Show the username
-                userIDComboBox.ValueMember = "UserID";     // Use the user ID as value
+                userIDComboBox.DisplayMember = "UserName"; 
+                userIDComboBox.ValueMember = "UserID";     
             }
             catch (Exception ex)
             {
@@ -290,17 +299,26 @@ namespace SchedulingApp
         {
             try
             {
-                // Retrieve the list of appointment types from the database
-                var appointmentTypes = AppointmentRepo.GetAllTypes();
-                if (appointmentTypes.Count == 0)
+               
+                var dbTypes = AppointmentRepo.GetAllTypes()
+                    ?.Select(t => t.Type)
+                    .ToList() ?? new List<string>();
+
+                // Adds custom types to the combo box along with the DB Types
+                var customTypes = new[] { "Lunch", "Touchbase", "Conference" };
+                foreach (var type in customTypes)
                 {
-                    MessageBox.Show("No appointment types found.");
-                    return;
+                    if (!dbTypes.Contains(type, StringComparer.OrdinalIgnoreCase))
+                    {
+                        dbTypes.Add(type);
+                    }
                 }
-                // Bind the appointment types to the ComboBox
-                apptComboBox.DataSource = appointmentTypes;
-                apptComboBox.DisplayMember = "Type"; // Display appointment type
-                apptComboBox.ValueMember = "Type"; // Use appointment type as the value
+
+                
+                apptComboBox.DataSource = null; 
+                apptComboBox.DataSource = dbTypes;
+                apptComboBox.DisplayMember = null; 
+                apptComboBox.ValueMember = null;   
             }
             catch (Exception ex)
             {
@@ -312,7 +330,6 @@ namespace SchedulingApp
         {
             try
             {
-                // Ensure a row is selected
                 if (appointmentsDGV.SelectedRows.Count == 0)
                 {
                     MessageBox.Show("Please select an appointment to edit.");
@@ -321,43 +338,31 @@ namespace SchedulingApp
 
                 var selectedRow = appointmentsDGV.SelectedRows[0];
 
-                // Validate AppointmentID
-                if (selectedRow.Cells["AppointmentID"].Value == null || !int.TryParse(selectedRow.Cells["AppointmentID"].Value.ToString(), out int appointmentId))
-                {
-                    MessageBox.Show("Invalid Appointment ID.");
-                    return;
-                }
-
-                // Validate CustomerID
-                if (selectedRow.Cells["CustomerID"].Value == null || !int.TryParse(selectedRow.Cells["CustomerID"].Value.ToString(), out int customerId))
-                {
-                    MessageBox.Show("Invalid Customer ID.");
-                    return;
-                }
-
-                // Validate UserID
-                if (selectedRow.Cells["UserID"].Value == null || !int.TryParse(selectedRow.Cells["UserID"].Value.ToString(), out int userId))
-                {
-                    MessageBox.Show("Invalid User ID.");
-                    return;
-                }
-
-                // Get other details
+                // Get values directly from the selected row
+                int appointmentId = Convert.ToInt32(selectedRow.Cells["AppointmentID"].Value);
+                int customerId = Convert.ToInt32(selectedRow.Cells["CustomerID"].Value);
+                int userId = Convert.ToInt32(selectedRow.Cells["UserID"].Value);
                 string type = selectedRow.Cells["Type"].Value.ToString();
                 DateTime start = Convert.ToDateTime(selectedRow.Cells["Start"].Value);
                 DateTime end = Convert.ToDateTime(selectedRow.Cells["End"].Value);
 
-                // Populate the form's input fields
+                
                 custComboBox.SelectedValue = customerId;
-                apptComboBox.SelectedValue = type;
+                userIDComboBox.SelectedValue = userId;
+                apptComboBox.SelectedItem = type; 
                 startTimePick.Value = start;
                 endTimePick.Value = end;
 
-                // Update the appointment when the user clicks "Save"
-                saveBtn.Click -= saveBtn_Click; // Unsubscribe from the Add functionality
+                
+                saveBtn.Click -= saveBtn_Click;
                 saveBtn.Click += (s, args) =>
                 {
-                    UpdateAppointment(appointmentId, customerId, type, startTimePick.Value, endTimePick.Value, userId);
+                    UpdateAppointment(appointmentId,
+                                      (int)custComboBox.SelectedValue,
+                                      apptComboBox.SelectedItem.ToString(), 
+                                      startTimePick.Value.ToUniversalTime(),
+                                      endTimePick.Value.ToUniversalTime(),
+                                      (int)userIDComboBox.SelectedValue);
                 };
 
                 MessageBox.Show("Edit the appointment details and click 'Save' to update.");
@@ -372,22 +377,18 @@ namespace SchedulingApp
         {
             try
             {
-                // Ensure a row is selected
                 if (appointmentsDGV.SelectedRows.Count == 0)
                 {
                     MessageBox.Show("Please select an appointment to delete.");
                     return;
                 }
 
-                // Get the selected appointment's ID
                 var selectedRow = appointmentsDGV.SelectedRows[0];
                 int appointmentId = Convert.ToInt32(selectedRow.Cells["AppointmentID"].Value);
 
-                // Confirm deletion
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this appointment?", "Delete Appointment", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    // Delete the appointment
                     int userId = (int)userIDComboBox.SelectedValue;
                     string type = apptComboBox.SelectedValue.ToString();
                     int customerId = (int)custComboBox.SelectedValue;
@@ -397,6 +398,15 @@ namespace SchedulingApp
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while deleting the appointment: {ex.Message}");
+            }
+        }
+
+        private void custComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (custComboBox.SelectedValue != null && int.TryParse(custComboBox.SelectedValue.ToString(), out int customerId))
+            {
+                _customerId = customerId;
+                LoadAppointmentsData();
             }
         }
     }

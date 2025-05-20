@@ -94,7 +94,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(67, 367);
+            this.label3.Location = new System.Drawing.Point(64, 367);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(221, 34);
             this.label3.TabIndex = 6;
@@ -102,7 +102,7 @@
             // 
             // phoneNumTextBox
             // 
-            this.phoneNumTextBox.Location = new System.Drawing.Point(309, 367);
+            this.phoneNumTextBox.Location = new System.Drawing.Point(306, 367);
             this.phoneNumTextBox.Multiline = true;
             this.phoneNumTextBox.Name = "phoneNumTextBox";
             this.phoneNumTextBox.Size = new System.Drawing.Size(544, 42);
@@ -115,7 +115,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(67, 454);
+            this.label4.Location = new System.Drawing.Point(64, 454);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 34);
             this.label4.TabIndex = 8;
@@ -123,7 +123,7 @@
             // 
             // cityTextBox
             // 
-            this.cityTextBox.Location = new System.Drawing.Point(175, 454);
+            this.cityTextBox.Location = new System.Drawing.Point(172, 454);
             this.cityTextBox.Multiline = true;
             this.cityTextBox.Name = "cityTextBox";
             this.cityTextBox.Size = new System.Drawing.Size(654, 42);
@@ -136,7 +136,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(67, 532);
+            this.label5.Location = new System.Drawing.Point(64, 532);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 34);
             this.label5.TabIndex = 10;
@@ -144,7 +144,7 @@
             // 
             // countryTextBox
             // 
-            this.countryTextBox.Location = new System.Drawing.Point(198, 532);
+            this.countryTextBox.Location = new System.Drawing.Point(195, 532);
             this.countryTextBox.Multiline = true;
             this.countryTextBox.Name = "countryTextBox";
             this.countryTextBox.Size = new System.Drawing.Size(631, 42);
@@ -156,7 +156,7 @@
             this.saveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.saveBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.saveBtn.Location = new System.Drawing.Point(646, 616);
+            this.saveBtn.Location = new System.Drawing.Point(643, 616);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(86, 41);
             this.saveBtn.TabIndex = 11;
@@ -170,12 +170,13 @@
             this.cancelBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cancelBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.cancelBtn.Location = new System.Drawing.Point(743, 616);
+            this.cancelBtn.Location = new System.Drawing.Point(740, 616);
             this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(86, 41);
+            this.cancelBtn.Size = new System.Drawing.Size(98, 41);
             this.cancelBtn.TabIndex = 12;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // label6
             // 

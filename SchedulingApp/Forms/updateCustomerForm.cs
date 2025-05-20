@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SchedulingApp.LoginForm;
 
 namespace SchedulingApp
 {
@@ -20,16 +21,15 @@ namespace SchedulingApp
         {
             InitializeComponent();
 
-            // Store the customer ID for updating
+           
             _customerId = customerId;
-            //customerID box disabled readonly
+            
             custIDTextBox.Text = customerId.ToString();
             custIDTextBox.ReadOnly = true;
-           
-
-            // Populate the textboxes with the selected customer's data
+    
             nameTextBox.Text = customerName;
             addressTextBox.Text = address;
+            
             phoneNumTextBox.Text = phone;
             cityTextBox.Text = city;
             countryTextBox.Text = country;
@@ -39,7 +39,7 @@ namespace SchedulingApp
         {
             try
             {
-                // Validate input
+             
                 if (string.IsNullOrWhiteSpace(nameTextBox.Text))
                 {
                     MessageBox.Show("Please enter a customer name.");
@@ -50,6 +50,7 @@ namespace SchedulingApp
                     MessageBox.Show("Please enter an address.");
                     return;
                 }
+              
                 if (string.IsNullOrWhiteSpace(phoneNumTextBox.Text))
                 {
                     MessageBox.Show("Please enter a phone number.");
@@ -66,7 +67,6 @@ namespace SchedulingApp
                     return;
                 }
 
-                // Update the customer record in the database
                 int countryId = CountryRepo.GetOrAddCountry(countryTextBox.Text);
                 int cityId = CityRepo.GetOrAddCity(cityTextBox.Text, countryId);
                 int addressId = AddressRepo.GetOrAddAddress(addressTextBox.Text, cityId, phoneNumTextBox.Text);
@@ -75,16 +75,15 @@ namespace SchedulingApp
                     customerID: _customerId,
                     customerName: nameTextBox.Text,
                     addressID: addressId,
-                    active: true, // Assuming the customer is active
-                    createDate: DateTime.Now, // This can be the original creation date
-                    createdBy: "admin", // Replace with the logged-in user's username
+                    active: true, 
+                    createDate: DateTime.Now, 
+                    createdBy: GlobalState.CurrentUsername, 
                     lastUpdate: DateTime.Now,
-                    lastUpdatedBy: "admin" // Replace with the logged-in user's username
+                    lastUpdatedBy: GlobalState.CurrentUsername 
                 );
 
                 CustomerRepo.UpdateCustomer(updatedCustomer);
 
-                // Close the form
                 MessageBox.Show("Customer updated successfully!");
                 this.Close();
             }
@@ -92,6 +91,11 @@ namespace SchedulingApp
             {
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

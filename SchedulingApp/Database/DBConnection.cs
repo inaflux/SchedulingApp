@@ -32,7 +32,7 @@ namespace SchedulingApp.Database
             }
             catch (MySqlException ex)
             {
-                // Log or rethrow the exception for the calling code to handle
+             
                 throw new Exception("Failed to open database connection.", ex);
             
             }
@@ -49,12 +49,9 @@ namespace SchedulingApp.Database
 
         public static MySqlConnection GetConnection()
         {
-            if (_connection == null || _connection.State == System.Data.ConnectionState.Closed)
-            {
-                StartConnection();
-            }
-
-            return _connection;
+            var conn = new MySqlConnection(ConnectionString);
+            conn.Open();
+            return conn;
         }
     }
 }

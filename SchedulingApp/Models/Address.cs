@@ -6,16 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchedulingApp.Models
 {
-    //addressId int AI PK
-    //address varchar(50)
-    //address2 varchar(50)
-    //cityId int
-    //postalCode varchar(10)
-    //phone varchar(20)
-    //createDate datetime
-    //createdBy varchar(40)
-    //lastUpdate timestamp
-    //lastUpdateBy varchar(40)
+
     public class Address
     {
         public int AddressID { get; set; }

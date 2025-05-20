@@ -8,21 +8,7 @@ using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace SchedulingApp.Models
 {
-//appointmentId int AI PK
-//customerId int
-//userId int
-//title varchar(255)
-//description text
-//location text
-//contact text
-//type text
-//url varchar(255)
-//start datetime
-//end datetime
-//createDate datetime
-//createdBy varchar(40)
-//lastUpdate timestamp
-//lastUpdateBy varchar(40)
+
     public class Appointment
     {
         public int  AppointmentID { get; set; }

@@ -28,8 +28,7 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@lastUpdateBy", appointment.LastUpdatedBy);
             cmd.ExecuteNonQuery();
         }
-        Console.WriteLine("Executing query: " + query);
-
+   
     }
 
     public static List<Appointment> GetAppointmentsByCustomerId(int customerId)
@@ -54,8 +53,8 @@ public static class AppointmentRepo
                         reader.GetString("contact"),
                         reader.GetString("type"),
                         reader.GetString("url"),
-                        reader.GetDateTime("start"),
-                        reader.GetDateTime("end"),
+                        DateTime.SpecifyKind(reader.GetDateTime("start"), DateTimeKind.Utc),
+                        DateTime.SpecifyKind(reader.GetDateTime("end"), DateTimeKind.Utc),
                         reader.GetDateTime("createDate"),
                         reader.GetString("createdBy"),
                         reader.GetDateTime("lastUpdate"),
@@ -64,7 +63,6 @@ public static class AppointmentRepo
                 }
             }
         }
-        Console.WriteLine("Executing query: " + query);
 
         return appointments;
     }
@@ -78,11 +76,9 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@appointmentID", appointmentId);
             cmd.ExecuteNonQuery();
         }
-        Console.WriteLine("Executing query: " + query);
 
     }
 
-    //update appointment
     public static void UpdateAppointment(Appointment appointment)
     {
         var connection = DBConnection.GetConnection();
@@ -105,7 +101,7 @@ public static class AppointmentRepo
             cmd.Parameters.AddWithValue("@appointmentID", appointment.AppointmentID);
             cmd.ExecuteNonQuery();
         }
-        Console.WriteLine("Executing query: " + query);
+       
     }
 
     public static List<Appointment> GetAllTypes()
@@ -152,7 +148,6 @@ public static class AppointmentRepo
                         Type = reader.GetString("type"),
                         Start = reader.GetDateTime("start"),
                         End = reader.GetDateTime("end"),
-                        // Add other fields as needed
                     });
                 }
             }
@@ -190,7 +185,7 @@ public static class AppointmentRepo
                 }
             }
         }
-        Console.WriteLine("Executing query: " + query);
+   
         return appointments;
     }
 }

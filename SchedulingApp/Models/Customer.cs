@@ -7,14 +7,7 @@ using System.Threading.Tasks;
 
 namespace SchedulingApp.Models
 {
-    //customerId int AI PK
-    //customerName varchar(45)
-    //addressId int
-    //active tinyint(1)
-    //createDate datetime
-    //createdBy varchar(40)
-    //lastUpdate timestamp
-    //lastUpdateBy varchar(40)
+
     public class Customer
     {
         public int CustomerID { get; set; }
@@ -32,8 +25,6 @@ namespace SchedulingApp.Models
 
         public string LastUpdatedBy { get; set; }
 
-
-        // Constructor for creating a new customer
 
         public Customer() { }
 

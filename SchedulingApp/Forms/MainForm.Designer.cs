@@ -37,10 +37,7 @@
             this.editBtn = new System.Windows.Forms.Button();
             this.scheduleBtn = new System.Windows.Forms.Button();
             this.reportsBtn = new System.Windows.Forms.Button();
-            this.searchBtn = new System.Windows.Forms.Button();
-            this.searchTextBox = new System.Windows.Forms.TextBox();
             this.exitButton = new System.Windows.Forms.Button();
-            this.currentDateTimeLabel = new System.Windows.Forms.Label();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             this.mySqlCommand2 = new MySql.Data.MySqlClient.MySqlCommand();
             this.allViewRadioBtn = new System.Windows.Forms.RadioButton();
@@ -156,28 +153,6 @@
             this.reportsBtn.UseVisualStyleBackColor = false;
             this.reportsBtn.Click += new System.EventHandler(this.reportsBtn_Click);
             // 
-            // searchBtn
-            // 
-            this.searchBtn.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.searchBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.searchBtn.Font = new System.Drawing.Font("Roboto", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchBtn.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.searchBtn.Location = new System.Drawing.Point(680, 17);
-            this.searchBtn.Name = "searchBtn";
-            this.searchBtn.Size = new System.Drawing.Size(94, 42);
-            this.searchBtn.TabIndex = 13;
-            this.searchBtn.Text = "Search";
-            this.searchBtn.UseVisualStyleBackColor = false;
-            this.searchBtn.Click += new System.EventHandler(this.searchBtn_Click_1);
-            // 
-            // searchTextBox
-            // 
-            this.searchTextBox.Location = new System.Drawing.Point(786, 17);
-            this.searchTextBox.Multiline = true;
-            this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(352, 43);
-            this.searchTextBox.TabIndex = 14;
-            // 
             // exitButton
             // 
             this.exitButton.BackColor = System.Drawing.Color.DarkSlateGray;
@@ -191,15 +166,6 @@
             this.exitButton.Text = "EXIT";
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
-            // 
-            // currentDateTimeLabel
-            // 
-            this.currentDateTimeLabel.AutoSize = true;
-            this.currentDateTimeLabel.Location = new System.Drawing.Point(824, 944);
-            this.currentDateTimeLabel.Name = "currentDateTimeLabel";
-            this.currentDateTimeLabel.Size = new System.Drawing.Size(191, 22);
-            this.currentDateTimeLabel.TabIndex = 23;
-            this.currentDateTimeLabel.Text = "Current Time and Date";
             // 
             // mySqlCommand1
             // 
@@ -279,10 +245,7 @@
             this.Controls.Add(this.monthViewRadioBtn);
             this.Controls.Add(this.weekViewRadioBtn);
             this.Controls.Add(this.allViewRadioBtn);
-            this.Controls.Add(this.currentDateTimeLabel);
             this.Controls.Add(this.exitButton);
-            this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.reportsBtn);
             this.Controls.Add(this.scheduleBtn);
             this.Controls.Add(this.editBtn);
@@ -310,10 +273,7 @@
         private System.Windows.Forms.Button editBtn;
         private System.Windows.Forms.Button scheduleBtn;
         private System.Windows.Forms.Button reportsBtn;
-        private System.Windows.Forms.Button searchBtn;
-        private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button exitButton;
-        private System.Windows.Forms.Label currentDateTimeLabel;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand2;
         private System.Windows.Forms.RadioButton allViewRadioBtn;

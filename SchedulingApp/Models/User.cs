@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchedulingApp.Models
 {
-//userId int AI PK
-//userName varchar(50)
-//password varchar(50)
-//active tinyint
-//createDate datetime
-//createdBy varchar(40)
-//lastUpdate timestamp
-//lastUpdateBy varchar(40)
+
     public class User
     {
         public int UserID { get; set; }

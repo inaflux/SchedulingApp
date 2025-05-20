@@ -22,16 +22,15 @@ namespace SchedulingApp
             numOfCitiesBtn.Click += numOfCitiesBtn_Click;
         }
 
-        // 1. Load users into ComboBox
+      
         private void LoadUsers()
         {
-            var users = UserRepo.GetUserID(); // Assumes this returns List<User>
+            var users = UserRepo.GetUserID(); 
             userComboBox.DataSource = users;
             userComboBox.DisplayMember = "UserName";
             userComboBox.ValueMember = "UserID";
         }
 
-        // 1. When user selected, show their appointments
         private void userComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (userComboBox.SelectedValue is int userId)
@@ -41,20 +40,19 @@ namespace SchedulingApp
             }
         }
 
-        // 2. When month selected, show appointment types for that month
         private void monthPicker_ValueChanged(object sender, EventArgs e)
         {
             var selectedMonth = monthPicker.Value.Month;
             var selectedYear = monthPicker.Value.Year;
             var appts = AppointmentRepo.GetAllAppointments();
             var typesByMonth = appts
-                .Where(a => a.Start.Month == selectedMonth && a.Start.Year == selectedYear)  //This lambda expression returns only appointments whose Start date matches the selected month and year.
+                .Where(a => a.Start.Month == selectedMonth && a.Start.Year == selectedYear)  //returns only appointments whose Start date matches the selected month and year.
 
 
-                .GroupBy(a => a.Type)//This groups the appointments so you can count how many of each type there are.
+                .GroupBy(a => a.Type)//groups the appointments so you can count how many of each type there are.
 
                 .Select(g => $"{g.Key}: {g.Count()}") 
-                //This lambda expression creates a string for each group, where g.Key is the type and g.Count() is the number of appointments of that type.
+                // creates a string for each group, g.Key is the type and g.Count() is the number of appointments of that type.
 
                 .ToList();
 
@@ -73,13 +71,22 @@ namespace SchedulingApp
             }
         }
 
-        // 3. On button click, show how many cities are in the database
-
-
+      
         private void numOfCitiesBtn_Click(object sender, EventArgs e)
         {
-            var cities = CityRepo.GetAllCities();
-            var cityCount = cities.Select(c => c.CityName).Distinct().Count();
+          
+            var cities = CityRepo.GetAllCities(); 
+            var cityNames = new List<string>();
+
+            foreach (var city in cities)
+            {
+                if (!cityNames.Contains(city.CityName))
+                {
+                    cityNames.Add(city.CityName);
+                }
+            }
+
+            int cityCount = cityNames.Count;
 
             citiList.Items.Clear();
             citiList.Items.Add(new ListViewItem($"Total Cities: {cityCount}"));

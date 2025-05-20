@@ -20,39 +20,12 @@ public static class CountryRepo
             cmd.ExecuteNonQuery();
             lastInsertedId = (int)cmd.LastInsertedId;
         }
-        Console.WriteLine("Executing query: " + query);
-
-        // Return the LastInsertedId after the using block
+       
+        
         return lastInsertedId;
     }
 
-    public static Country GetCountryById(int countryId)
-    {
-        var connection = DBConnection.GetConnection();
-        string query = "SELECT * FROM country WHERE countryID = @countryID";
-        using (var cmd = new MySqlCommand(query, connection))
-        {
-            cmd.Parameters.AddWithValue("@countryID", countryId);
-            using (var reader = cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    return new Country(
-                        reader.GetInt32("countryID"),
-                        reader.GetString("country"),
-                        reader.GetDateTime("createDate"),
-                        reader.GetString("createdBy"),
-                        reader.GetDateTime("lastUpdate"),
-                        reader.GetString("lastUpdateBy")
-                    );
-                }
-            }
-        }
-        Console.WriteLine("Executing query: " + query);
-
-        return null;
-    }
-
+  
     public static int GetOrAddCountry(string countryName)
     {
         var connection = DBConnection.GetConnection();
@@ -63,11 +36,11 @@ public static class CountryRepo
             var result = cmd.ExecuteScalar();
             if (result != null)
             {
-                return Convert.ToInt32(result); // Country exists, return its ID
+                return Convert.ToInt32(result); 
             }
         }
 
-        // Country does not exist, insert it
+        // if country does not exist, add it
         var newCountry = new Country(0, countryName, DateTime.Now, "admin", DateTime.Now, "admin");
         Console.WriteLine("Executing query: " + query);
 

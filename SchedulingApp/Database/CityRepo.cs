@@ -24,38 +24,8 @@ public static class CityRepo
 
             lastInsertedId = (int)cmd.LastInsertedId;
         }
-        Console.WriteLine("Executing query: " + query);
-
-        // Return the LastInsertedId after the using block
+ 
         return lastInsertedId;
-    }
-
-    public static City GetCityById(int cityId)
-    {
-        var connection = DBConnection.GetConnection();
-        string query = "SELECT * FROM city WHERE cityID = @cityID";
-        using (var cmd = new MySqlCommand(query, connection))
-        {
-            cmd.Parameters.AddWithValue("@cityID", cityId);
-            using (var reader = cmd.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    return new City(
-                        reader.GetInt32("cityID"),
-                        reader.GetString("city"),
-                        reader.GetInt32("countryID"),
-                        reader.GetDateTime("createDate"),
-                        reader.GetString("createdBy"),
-                        reader.GetDateTime("lastUpdate"),
-                        reader.GetString("lastUpdateBy")
-                    );
-                }
-            }
-        }
-        Console.WriteLine("Executing query: " + query);
-
-        return null;
     }
 
     public static int GetOrAddCity(string cityName, int countryID)
@@ -69,14 +39,13 @@ public static class CityRepo
             var result = cmd.ExecuteScalar();
             if (result != null)
             {
-                return Convert.ToInt32(result); // City exists, return its ID
+                return Convert.ToInt32(result); 
             }
         }
 
-        // City does not exist, insert it
+       
         var newCity = new City(0, cityName, countryID, DateTime.Now, "admin", DateTime.Now, "admin");
-        Console.WriteLine("Executing query: " + query);
-
+      
         DBConnection.CloseConnection();
         return AddCity(newCity);
 
@@ -85,24 +54,18 @@ public static class CityRepo
     public static List<City> GetAllCities()
     {
         var cities = new List<City>();
-        var connection = DBConnection.GetConnection();
-
-        string query = "SELECT * FROM city";
-        using (var cmd = new MySqlCommand(query, connection))
-            
+        using (var conn = DBConnection.GetConnection())
+        {
+            string query = "SELECT city FROM city";
+            using (var cmd = new MySqlCommand(query, conn))
             using (var reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    cities.Add(new City
-                    {
-                        CityID = reader.GetInt32("cityId"),
-                        CityName = reader.GetString("city"),
-                        // Add other fields as needed
-                    });
+                    cities.Add(new City { CityName = reader.GetString("city") });
                 }
             }
-        
+        }
         return cities;
     }
 

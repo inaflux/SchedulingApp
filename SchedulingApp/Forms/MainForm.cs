@@ -28,12 +28,8 @@ namespace SchedulingApp
             allViewRadioBtn.CheckedChanged += CalendarViewChanged;
             weekViewRadioBtn.CheckedChanged += CalendarViewChanged;
             monthViewRadioBtn.CheckedChanged += CalendarViewChanged;
-
-            // Set default view
             allViewRadioBtn.Checked = true;
             CalendarViewChanged(null, null);
-
-
         }
 
         private void LoadCustomerData()
@@ -65,6 +61,8 @@ namespace SchedulingApp
         {
             addCustomerForm addCustomerForm = new addCustomerForm();
             addCustomerForm.ShowDialog();
+
+            LoadCustomerData();
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
@@ -93,15 +91,13 @@ namespace SchedulingApp
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-          
-            // Ensure a row is selected
+         
             if (customersDGV.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a customer to update.");
                 return;
             }
 
-            // Get the selected customer data
             var selectedRow = customersDGV.SelectedRows[0];
             int customerId = Convert.ToInt32(selectedRow.Cells["CustomerID"].Value);
             string customerName = selectedRow.Cells["CustomerName"].Value.ToString();
@@ -110,11 +106,10 @@ namespace SchedulingApp
             string city = selectedRow.Cells["City"].Value.ToString();
             string country = selectedRow.Cells["Country"].Value.ToString();
 
-            // Open the updateCustomerForm and pass the selected customer data
             var updateForm = new updateCustomerForm(customerId, customerName, address, phone, city, country);
             updateForm.ShowDialog();
 
-            // Refresh the DataGridView after updating
+           
             LoadCustomerData();
         }
 
@@ -123,17 +118,15 @@ namespace SchedulingApp
 
 private void scheduleBtn_Click(object sender, EventArgs e)
         {
-            // Ensure a row is selected
+            
             if (customersDGV.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a customer to schedule an appointment.");
                 return;
             }
 
-            // Get the selected customer's ID
             int customerId = Convert.ToInt32(customersDGV.SelectedRows[0].Cells["CustomerID"].Value);
 
-            // Open the AppointmentsFrom form and pass the customer ID
             AppointmentsFrom scheduleForm = new AppointmentsFrom(customerId);
             scheduleForm.ShowDialog();
         }
@@ -145,52 +138,8 @@ private void scheduleBtn_Click(object sender, EventArgs e)
         }
   
 
-    private void searchBtn_Click_1(object sender, EventArgs e)
-        {
-            string searchTerm = searchTextBox.Text.Trim().ToLower();
-
-            // Validation: Require at least 2 characters and only allow letters, numbers, and spaces
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                customersDGV.DataSource = allCustomers;
-                LayoutCustomerDGV();
-                return;
-            }
-            else if (searchTerm.Length < 2)
-            {
-                MessageBox.Show("Please enter at least 2 characters for your search.");
-                return;
-            }
-            else if (!searchTerm.All(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)))
-            {
-                MessageBox.Show("Search can only contain letters, numbers, and spaces.");
-                return;
-            }
-            else
-            {
-                var filtered = allCustomers
-                    .Where(c =>
-                        (c.CustomerName != null && c.CustomerName.ToLower().Contains(searchTerm)) ||
-                        (c.Address != null && c.Address.ToLower().Contains(searchTerm)) ||
-                        (c.Phone != null && c.Phone.ToLower().Contains(searchTerm)) ||
-                        (c.City != null && c.City.ToLower().Contains(searchTerm)) ||
-                        (c.Country != null && c.Country.ToLower().Contains(searchTerm))
-                    )
-                    .ToList();
-
-                if (filtered.Count == 0)
-                {
-                    MessageBox.Show("No customers found matching your search.");
-                    customersDGV.DataSource = allCustomers;
-                }
-                else
-                {
-                    customersDGV.DataSource = filtered;
-                }
-                LayoutCustomerDGV();
-            }
-        }
-        private void CalendarViewChanged(object sender, EventArgs e)
+    
+private void CalendarViewChanged(object sender, EventArgs e)
         {
             List<Appointment> allAppointments = AppointmentRepo.GetAllAppointments();
             List<Appointment> filteredAppointments = new List<Appointment>();
@@ -209,7 +158,7 @@ private void scheduleBtn_Click(object sender, EventArgs e)
             }
 
             calendarDGV.DataSource = filteredAppointments;
-            // Optionally, format columns here
+            LayoutCalendarDGV(); // Hide unwanted columns and set headers
         }
 
         private List<Appointment> GetAppointmentsForCurrentWeek(List<Appointment> appointments)
@@ -247,6 +196,41 @@ private void scheduleBtn_Click(object sender, EventArgs e)
                 }
             }
             return monthAppointments;
+        }
+        private void LayoutCalendarDGV()
+        {
+           
+            if (calendarDGV.Columns.Contains("AppointmentID"))
+                calendarDGV.Columns["AppointmentID"].HeaderText = "ID";
+            if (calendarDGV.Columns.Contains("Type"))
+                calendarDGV.Columns["Type"].HeaderText = "Type";
+            if (calendarDGV.Columns.Contains("CustomerID"))
+                calendarDGV.Columns["CustomerID"].HeaderText = "Customer";
+            if (calendarDGV.Columns.Contains("Start"))
+                calendarDGV.Columns["Start"].HeaderText = "Start Time";
+            if (calendarDGV.Columns.Contains("End"))
+                calendarDGV.Columns["End"].HeaderText = "End Time";
+            if (calendarDGV.Columns.Contains("UserID"))
+                calendarDGV.Columns["UserID"].HeaderText = "User";
+
+            foreach (DataGridViewColumn column in calendarDGV.Columns)
+            {
+                if (column.Name != "AppointmentID" &&
+                    column.Name != "Type" &&
+                    column.Name != "CustomerID" &&
+                    column.Name != "Start" &&
+                    column.Name != "End" &&
+                    column.Name != "UserID")
+                {
+                    column.Visible = false;
+                }
+                else
+                {
+                    column.Visible = true;
+                }
+            }
+
+            calendarDGV.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
     }
     

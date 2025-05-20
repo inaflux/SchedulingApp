@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchedulingApp.Models
 {
-//countryId int AI PK
-//country varchar(50)
-//createDate datetime
-//createdBy varchar(40)
-//lastUpdate timestamp
-//lastUpdateBy varchar(40)
+
     public class Country
     {
         public int CountryID { get; set; }
